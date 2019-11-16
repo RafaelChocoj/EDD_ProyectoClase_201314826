@@ -58,6 +58,11 @@ public class Productos extends javax.swing.JFrame {
         jLabel5.setText("Nombre Categoría:");
 
         b_guardar.setText("Guardar");
+        b_guardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                b_guardarActionPerformed(evt);
+            }
+        });
 
         b_cancelar.setText("Cancelar");
         b_cancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -143,6 +148,18 @@ public class Productos extends javax.swing.JFrame {
         men.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_b_cancelarActionPerformed
+
+    private void b_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_guardarActionPerformed
+        //add (int x_prod, int y_cat, String nombreprod, double precio,int unidades, String cat_nomnbre)
+        ProyectoClase.mat_productos.add(10, 5, "pro1", 0.00, 0, "cat");
+        ProyectoClase.mat_productos.add(1, 1, "pro1", 0.00, 0, "cat");
+        ProyectoClase.mat_productos.add(3, 2, "pro1", 0.00, 0, "cat");
+        
+        ProyectoClase.mat_productos.add(9, 2, "pro1", 0.00, 0, "cat");
+        
+        ProyectoClase.mat_productos.print_x_header();
+        ProyectoClase.mat_productos.print_y_header();
+    }//GEN-LAST:event_b_guardarActionPerformed
 
     /**
      * @param args the command line arguments

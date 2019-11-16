@@ -154,4 +154,28 @@ public class Productos_matrix {
     }
     
     
+    
+    /*imprimiendo encabezados*/
+    
+    /*imprimiendo encabezados*/
+ public void print_x_header() {
+    NodeProducto temp = head;
+    while (temp.right != null) { 
+        System.out.print("("+temp.idproducto_x+ ","+temp.idcate_y +") -> ");
+        temp = temp.right;
+    }  	
+    System.out.print("("+temp.idproducto_x+ ","+temp.idcate_y +") -> ");
+}
+   
+public void print_y_header() {
+    System.out.println();
+    NodeProducto temp = head;
+
+    while (temp.down != null) { 
+        System.out.println("("+temp.idproducto_x+ ","+temp.idcate_y +") -> ");
+        temp = temp.down;
+    }  	 
+    System.out.println("("+temp.idproducto_x+ ","+temp.idcate_y +") -> ");
+}
+    
 }
