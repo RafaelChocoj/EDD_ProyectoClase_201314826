@@ -8,6 +8,7 @@ package proyectoclase;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.util.Date;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -28,6 +29,25 @@ public class ListaDoUser {
         return this.primero_head == null;
     }
     
+    public boolean User_Login(String user, String pass){
+        String pass_encrip = this.sha256(pass);
+        
+        NodeUsuario tempo;
+        tempo = this.primero_head;
+        while (tempo != null){
+            
+            if (tempo.usuario.equals(user) && tempo.password.equals(pass_encrip) ) {
+                return true;
+            }
+            else if (tempo.usuario.equals(user) && !tempo.password.equals(pass_encrip) ){
+                JOptionPane.showMessageDialog(null, "Contraseña incorrecta","Err",JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
+            
+            tempo = tempo.siguiente;
+        }
+        return false;
+    }
     public void Insert_fin(String usuario, String password, Date fechahora){
         String pass_encrip = this.sha256(password);
         
