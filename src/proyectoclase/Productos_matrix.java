@@ -27,14 +27,19 @@ public class Productos_matrix {
     }
     
     public void add (int x_prod, int y_cat, String nombreprod, double precio,int unidades, String cat_nomnbre) {
-//    	//1 crear header
-//    	//1.1 creade x header
-//    	add_z_header(z, file_capa);
+    	//1 crear header
+    	//1.1 creade x header
+    	////add_z_header(z, file_capa);
+        
 //    	add_x_header(x, z);
 //    	add_y_header(y, z);  	
-//    	//1.2 create y header
-//    	
-//    	
+        
+        add_x_header(x_prod);
+    	add_y_header(y_cat);  
+        
+    	//1.2 create y header
+    	
+    	
 //    	//2 insert nodo
 //    	node *new_node = new node(value, x, y, z, "N", valor);
 //
@@ -66,7 +71,7 @@ public class Productos_matrix {
 //    		head_x = head_x.capa_up;
 //		}
 
-        ////NodeProducto (String tipo,int idproducto_x, int idcate_y, String nombrear, double precio,int unidades, String nombrecate)
+        //NodeProducto (String tipo,int idproducto_x, int idcate_y, String nombrear, double precio,int unidades, String nombrecate)
     	if (head_x.right == null) {   	
 	    	NodeProducto temp = new NodeProducto("C", x_prod,0, "prod" , 0.00, 0, "cat");
 	    	head_x.right = temp;
@@ -101,5 +106,52 @@ public class Productos_matrix {
                         }
     	}
     }
+    
+    //public void add_y_header(int y_cat, int z) {
+    public void add_y_header(int y_cat) {
+
+    	NodeProducto head_y = head;
+        
+//    	/*primero recorre prufundidad*/
+//        /*recorre por z, para insertar a la derecha*/	
+//        while(head_y.cor_z != z){
+//        head_y = head_y.capa_up;
+//        }	
+    		
+    	if (head_y.down == null) { 
+                //NodeProducto (String tipo,int idproducto_x, int idcate_y, String nombrear, double precio,int unidades, String nombrecate)
+                NodeProducto temp =       new NodeProducto("C", 0, y_cat, "prod" , 0.00, 0, "cat");
+	    	head_y.down = temp;
+	    	temp.up = head_y; 
+    	} else  {     	
+		NodeProducto temp =head;
+                
+//		/*nuevo inicio*/
+//		while(temp.cor_z != z){
+//    		temp = temp.capa_up;
+//		}
+//		/*nuevo fin*/
+
+		while (temp.down != null && temp.down.idcate_y < y_cat ) { 
+			temp = temp.down;
+                } 
+                    if (temp.down == null ) { 
+		    	NodeProducto new_temp = new NodeProducto("C", 0, y_cat, "prod" , 0.00, 0, "cat");
+		    	temp.down = new_temp;
+		    	new_temp.up = temp; 
+		    	
+	    		}else if (temp.down != null && temp.down.idcate_y != y_cat )
+                        {
+                            NodeProducto new_temp = new NodeProducto("C", 0, y_cat, "prod" , 0.00, 0, "cat");
+                            NodeProducto der = temp.down;
+
+                            temp.down =new_temp;
+                            new_temp.up = temp;
+                            new_temp.down = der;
+                            der.up = new_temp;				
+                        }
+    	}
+    }
+    
     
 }
