@@ -14,10 +14,12 @@ public class ProyectoClase {
     /**
      * @param args the command line arguments
      */
+    static DataActualC session; //usuario actual
     static ListaDoUser lis_user;
     public static void main(String[] args) {
         // TODO code application logic here
         lis_user = new ListaDoUser();
+        session = new DataActualC(null);
         
         //lis_user.Insert_fin("user1", "123", null);
         lis_user.Insert_fin("admin", "0", null);

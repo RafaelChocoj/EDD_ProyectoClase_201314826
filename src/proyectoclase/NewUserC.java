@@ -5,18 +5,19 @@
  */
 package proyectoclase;
 
+import java.util.Date;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author ASUS
  */
-public class loguinC extends javax.swing.JFrame {
+public class NewUserC extends javax.swing.JFrame {
 
     /**
      * Creates new form loguin
      */
-    public loguinC() {
+    public NewUserC() {
         initComponents();
     }
 
@@ -29,8 +30,8 @@ public class loguinC extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        jbRegistrar = new javax.swing.JButton();
+        jBAtras = new javax.swing.JButton();
         jTuser = new javax.swing.JTextField();
         jTpass = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
@@ -38,22 +39,20 @@ public class loguinC extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        setResizable(false);
 
-        jButton1.setText("Nuevo Usuario");
-        jButton1.setActionCommand("jbregistrar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jbRegistrar.setText("Registrar");
+        jbRegistrar.setActionCommand("jbregistrar");
+        jbRegistrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jbRegistrarActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Ingresar");
-        jButton2.setActionCommand("Jbingresar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jBAtras.setText("Atras");
+        jBAtras.setActionCommand("Jbingresar");
+        jBAtras.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jBAtrasActionPerformed(evt);
             }
         });
 
@@ -62,27 +61,28 @@ public class loguinC extends javax.swing.JFrame {
         jLabel2.setText("Password");
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel3.setText("INICIO DE SESSION");
+        jLabel3.setText("REGISTRAR USUARIO");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addGap(95, 95, 95)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel1)
-                    .addComponent(jTpass, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
-                    .addComponent(jTuser, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
-                    .addComponent(jLabel2)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(29, 29, 29)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(95, 95, 95)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel1)
+                            .addComponent(jTpass, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTuser, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jBAtras))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(122, 122, 122)
+                        .addComponent(jbRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(88, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -98,30 +98,24 @@ public class loguinC extends javax.swing.JFrame {
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jTpass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jbRegistrar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addComponent(jBAtras)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        NewUserC n_user =new NewUserC();
-        n_user.show();
-        this.dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void jbRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbRegistrarActionPerformed
         // TODO add your handling code here:
         boolean err = false;
-        String user = "";
-        String pass = "";
+        String pass;
+        String user;
         user = jTuser.getText();
         pass = jTpass.getText();
-        //this.ValidandoUser(user, pass);
+        
         if (user.trim().length() == 0 || user.isEmpty()){
             JOptionPane.showMessageDialog(null, "Debe de ingresar usuario para poder continuar","NANI",JOptionPane.ERROR_MESSAGE);
             err = true;
@@ -130,27 +124,35 @@ public class loguinC extends javax.swing.JFrame {
             err = true;
             JOptionPane.showMessageDialog(null, "Debe de contraseña usuario para poder continuar","NANI",JOptionPane.ERROR_MESSAGE);
         }
-        if (err == false){
-            boolean existe = false;
-            existe = ProyectoClase.lis_user.User_Login(user, pass);
-            //Proyecto2.thash.print_hash();
-            
-            if (existe) {
-                
-                ProyectoClase.session.usuario_ac = user; //usuario actual
-                Menu menuv = new Menu();
-                menuv.show();
- 
-                this.dispose();
-            } else {
-                JOptionPane.showMessageDialog(null, "Usuario o Contraseña incorrecta","Atencion",JOptionPane.INFORMATION_MESSAGE);
-            }
-            
-        }
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    public void ValidandoUser(String user, String pass){
+        //JOptionPane.showMessageDialog(null, user);
+        //JOptionPane.showMessageDialog(null, pass );
+        //JOptionPane.showMessageDialog(null, pass.length() );
         
+//        if (pass.length()<8 ){
+//            err = true;
+//            JOptionPane.showMessageDialog(null, "La contraseña debe de tener al menos 8 caracteres","NANI",JOptionPane.ERROR_MESSAGE);
+//        }
+        if (ProyectoClase.lis_user.ExisteUser(user) == true){
+             JOptionPane.showMessageDialog(null, "El Usuario " + user + " ya existe");
+            err = true;
+        }
+        
+        if (err == false){ 
+            this.Insert_user(user.toString(), pass.toString());
+        }
+    }//GEN-LAST:event_jbRegistrarActionPerformed
+
+    private void jBAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAtrasActionPerformed
+        loguinC inicio = new loguinC();
+        inicio.show();
+        this.dispose();
+    }//GEN-LAST:event_jBAtrasActionPerformed
+    
+    public void Insert_user(String user, String pass){
+        
+        Date ahora = new Date();
+        ProyectoClase.lis_user.Insert_fin(user, pass, ahora);
+        JOptionPane.showMessageDialog(this, "Se registró el usuario correctamente","OK",JOptionPane.INFORMATION_MESSAGE);
     }
     /**
      * @param args the command line arguments
@@ -169,32 +171,34 @@ public class loguinC extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(loguinC.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NewUserC.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(loguinC.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NewUserC.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(loguinC.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NewUserC.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(loguinC.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NewUserC.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new loguinC().setVisible(true);
+                new NewUserC().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jBAtras;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JTextField jTpass;
     private javax.swing.JTextField jTuser;
+    private javax.swing.JButton jbRegistrar;
     // End of variables declaration//GEN-END:variables
 }

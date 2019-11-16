@@ -48,6 +48,23 @@ public class ListaDoUser {
         }
         return false;
     }
+    
+    
+    public boolean ExisteUser(String user){
+ 
+        NodeUsuario tempo;
+        tempo = this.primero_head;
+        while (tempo != null){
+            
+            if (tempo.usuario.equals(user) ) {
+                return true;
+            }
+            
+            tempo = tempo.siguiente;
+        }
+        return false;
+    }
+    
     public void Insert_fin(String usuario, String password, Date fechahora){
         String pass_encrip = this.sha256(password);
         
