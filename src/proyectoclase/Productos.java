@@ -152,10 +152,10 @@ public class Productos extends javax.swing.JFrame {
     private void b_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_guardarActionPerformed
         //add (int x_prod, int y_cat, String nombreprod, double precio,int unidades, String cat_nomnbre)
         ProyectoClase.mat_productos.add(10, 5, "pro1", 0.00, 0, "cat");
-        ProyectoClase.mat_productos.add(1, 1, "pro1", 0.00, 0, "cat");
-        ProyectoClase.mat_productos.add(3, 2, "pro1", 0.00, 0, "cat");
+        ProyectoClase.mat_productos.add(1, 1, "pro2", 0.00, 0, "cat");
+        ProyectoClase.mat_productos.add(3, 2, "pro3", 0.00, 0, "cat");
         
-        ProyectoClase.mat_productos.add(9, 2, "pro1", 0.00, 0, "cat");
+        ProyectoClase.mat_productos.add(9, 2, "pro4", 0.00, 0, "cat");
         
         ProyectoClase.mat_productos.print_x_header();
         ProyectoClase.mat_productos.print_y_header();
