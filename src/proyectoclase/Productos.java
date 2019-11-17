@@ -157,8 +157,10 @@ public class Productos extends javax.swing.JFrame {
         
         ProyectoClase.mat_productos.add(9, 2, "pro4", 0.00, 0, "cat");
         
-        ProyectoClase.mat_productos.print_x_header();
-        ProyectoClase.mat_productos.print_y_header();
+//        ProyectoClase.mat_productos.print_x_header();
+//        ProyectoClase.mat_productos.print_y_header();
+        
+        ProyectoClase.mat_productos.print_node_mat();
     }//GEN-LAST:event_b_guardarActionPerformed
 
     /**

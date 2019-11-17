@@ -56,7 +56,8 @@ public class Productos_matrix {
     	
     	//add_x(new_node, x_prod, y_cat, z);
         add_x(new_node, x_prod, y_cat);
-//    	add_y(new_node, x, y, z);
+    	//add_y(new_node, x_prod, y_cat, z);
+        add_y(new_node, x_prod, y_cat);
 
           
     }
@@ -220,7 +221,68 @@ public class Productos_matrix {
                     } //fin new para repetidos
             }
     }
-    
+ 
+    //public void add_y(NodeProducto new_node, int x_prod, int y_cat, int z){
+    public void add_y(NodeProducto new_node, int x_prod, int y_cat){
+            NodeProducto tem= head;
+            
+//            /*primero recorre prufundidad*/
+//            /*recorre por z, para insertar a la derecha*/	
+//            while(tem.cor_z != z){
+//            tem = tem.capa_up;
+//            }
+
+            /*recorre por y, para insertar a la derecha (x)*/	
+            while(tem.idcate_y != y_cat){
+            tem = tem.down;
+            }
+            if(tem.right == null){
+                    tem.right = new_node;
+                    new_node.left = tem;
+            }
+            else if(tem.right.idproducto_x >= x_prod ){
+
+            if(tem.right.idcate_y == y_cat && tem.right.idproducto_x == x_prod ){ ///nre para que no se repita
+            }else{
+
+                        NodeProducto ul_der = tem.right;
+
+                        tem.right = new_node;
+                        new_node.left = tem;
+
+                        //para que enlace el que estaba antes
+                        new_node.right = ul_der;
+                        ul_der.left = new_node;
+                    }
+            }
+            else
+            {
+                NodeProducto temp_der = tem.right;
+                while (temp_der.right != null && temp_der.right.idproducto_x <= x_prod ) {  
+                        temp_der = temp_der.right;
+                }
+            if(temp_der.idcate_y == y_cat && temp_der.idproducto_x == x_prod ){  /// inic nre parte para que nos repita
+            }else{
+
+                    NodeProducto ul_der = null;
+                    if (temp_der.right != null ){
+                            ul_der = temp_der.right;
+                    } /// fin new parte para que nos repita
+
+                temp_der.right = new_node;
+                new_node.left = temp_der;
+
+                    //para que enlace el que estaba antes
+                            if (ul_der != null ){
+
+                            new_node.right = ul_der;
+                            ul_der.left = new_node;
+                            }
+                    }
+
+
+            }
+    }
     
     
     /*imprimiendo encabezados*/
@@ -245,5 +307,30 @@ public void print_y_header() {
     }  	 
     System.out.println("("+temp.idproducto_x+ ","+temp.idcate_y +") -> ");
 }
+
+public void print_node_mat() {
+    System.out.println();
+    
+    NodeProducto temp = head;
+    NodeProducto temp_inicio;
+
+    while (temp != null) { 
+            temp_inicio = temp;
+            while (temp != null) { 
+                    if (temp != null)
+                    {
+                        System.out.print("("+temp.idproducto_x+ ","+temp.idcate_y +") -> ");
+
+                    }	    	
+                    temp = temp.right;
+                    }
+
+                    temp = temp_inicio;
+            temp = temp.down;
+            System.out.println();
+            }  	
+
+            System.out.println("**********termina**********");   
+    }
     
 }
