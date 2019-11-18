@@ -5,6 +5,11 @@
  */
 package proyectoclase;
 
+import java.awt.Desktop;
+import java.io.File;
+import java.io.FileWriter;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author RAFAEL
@@ -34,8 +39,8 @@ public class Productos_matrix {
 //    	add_x_header(x, z);
 //    	add_y_header(y, z);  	
         
-        add_x_header(x_prod);
-    	add_y_header(y_cat);  
+        add_x_header(x_prod, nombreprod);
+    	add_y_header(y_cat, cat_nomnbre);  
         
     	//1.2 create y header
     	
@@ -64,7 +69,7 @@ public class Productos_matrix {
     
     /////////////////inicio insertando encabezados
     //public void add_x_header(int x,  int z) {
-    public void add_x_header(int x_prod) {
+    public void add_x_header(int x_prod, String producto) {
 
     	NodeProducto head_x = head;
     	
@@ -76,7 +81,7 @@ public class Productos_matrix {
 
         //NodeProducto (String tipo,int idproducto_x, int idcate_y, String nombrear, double precio,int unidades, String nombrecate)
     	if (head_x.right == null) {   	
-	    	NodeProducto temp = new NodeProducto("C", x_prod,0, "prod" , 0.00, 0, "cat");
+	    	NodeProducto temp = new NodeProducto("C", x_prod,0, producto , 0.00, 0, producto);
 	    	head_x.right = temp;
 	    	temp.left = head_x; 
     	} else  {     
@@ -92,13 +97,13 @@ public class Productos_matrix {
 			temp = temp.right;
                 } 
                     if (temp.right == null ) { 
-		    	NodeProducto new_temp = new NodeProducto("C", x_prod,0, "prod" , 0.00, 0, "cat");
+		    	NodeProducto new_temp = new NodeProducto("C", x_prod,0, producto , 0.00, 0, producto);
 		    	temp.right = new_temp;
 		    	new_temp.left = temp; 
 		    	
 	    		}else if (temp.right != null && temp.right.idproducto_x != x_prod )
                         {
-                            NodeProducto new_temp = new NodeProducto("C", x_prod,0, "prod" , 0.00, 0, "cat");
+                            NodeProducto new_temp = new NodeProducto("C", x_prod,0, producto, 0.00, 0, producto);
                             NodeProducto der = temp.right;
 
                             temp.right = new_temp;
@@ -111,7 +116,7 @@ public class Productos_matrix {
     }
     
     //public void add_y_header(int y_cat, int z) {
-    public void add_y_header(int y_cat) {
+    public void add_y_header(int y_cat, String categoria) {
 
     	NodeProducto head_y = head;
         
@@ -123,7 +128,7 @@ public class Productos_matrix {
     		
     	if (head_y.down == null) { 
                 //NodeProducto (String tipo,int idproducto_x, int idcate_y, String nombrear, double precio,int unidades, String nombrecate)
-                NodeProducto temp =       new NodeProducto("C", 0, y_cat, "prod" , 0.00, 0, "cat");
+                NodeProducto temp =       new NodeProducto("C", 0, y_cat, categoria , 0.00, 0, categoria);
 	    	head_y.down = temp;
 	    	temp.up = head_y; 
     	} else  {     	
@@ -139,13 +144,13 @@ public class Productos_matrix {
 			temp = temp.down;
                 } 
                     if (temp.down == null ) { 
-		    	NodeProducto new_temp = new NodeProducto("C", 0, y_cat, "prod" , 0.00, 0, "cat");
+		    	NodeProducto new_temp = new NodeProducto("C", 0, y_cat, categoria , 0.00, 0, categoria );
 		    	temp.down = new_temp;
 		    	new_temp.up = temp; 
 		    	
 	    		}else if (temp.down != null && temp.down.idcate_y != y_cat )
                         {
-                            NodeProducto new_temp = new NodeProducto("C", 0, y_cat, "prod" , 0.00, 0, "cat");
+                            NodeProducto new_temp = new NodeProducto("C", 0, y_cat, categoria, 0.00, 0, categoria);
                             NodeProducto der = temp.down;
 
                             temp.down =new_temp;
@@ -308,6 +313,29 @@ public void print_y_header() {
     System.out.println("("+temp.idproducto_x+ ","+temp.idcate_y +") -> ");
 }
 
+
+public NodeProducto existeProducto(int produ_x) {
+    NodeProducto temp = head;
+    while (temp != null) { 
+        if (temp.idproducto_x == produ_x) {
+            return temp;
+        }
+        temp = temp.right;
+    }  	
+    return null;
+}
+
+public NodeProducto existeCategoria(int idcate) {
+    NodeProducto temp = head;
+    while (temp != null) { 
+        if (temp.idcate_y == idcate) {
+            return temp;
+        }
+        temp = temp.down;
+    }  	
+    return null;
+}
+
 public void print_node_mat() {
     System.out.println();
     
@@ -331,6 +359,147 @@ public void print_node_mat() {
             }  	
 
             System.out.println("**********termina**********");   
+    }
+
+    public int alto_mat(){
+    int alt = 0;
+
+    NodeProducto temp = head;
+    while (temp.down != null) { 
+            temp = temp.down;
+    }
+    alt = temp.idcate_y;
+    return alt;
+    }
+
+    public void print_Grafica_matrix() {
+    	//string graf_matrix;
+        StringBuilder graf  = new StringBuilder(); //grafica total
+    	String xx, yy;
+    	//String xx2, yy2;
+    	
+    	int alto;
+    	String y_grap;
+
+    	String des_nod;
+    	int cor2_x;
+    	String x_grap;
+    	
+    	graf.append("");
+		graf.append("digraph{ \n");
+		graf.append("rankdir=BT;\n");
+		//graf.append("graph [nodesep=5.5]; \n)";
+		graf.append("node[shape=record]; \n");
+		//graf.append("node[shape=record ,width=2.0]; \n");
+		graf.append("graph[pencolor=transparent]; \n");
+		graf.append("node [style=filled]; \n");
+    	
+    	NodeProducto temp = head;
+    	
+    	alto = alto_mat();
+    	//alto = alto_mat_x_cap(temp);
+    	
+    	//node *temp = nodo_x_nivel;
+    	NodeProducto temp_inicio;
+    	
+    	NodeProducto temp_sup_ini;
+		   	
+    	/*para recorrer para la derecha*/
+    	while (temp != null) { 
+	    	temp_inicio = temp;
+	    	/*para recorrer para abajo*/
+	    	while (temp != null) { 
+	
+
+    					xx = String.valueOf(temp.idproducto_x); 
+                                        yy = String.valueOf(temp.idcate_y);
+                                        y_grap = String.valueOf(alto - temp.idcate_y);
+
+                                        x_grap = xx;
+						
+                                        System.out.print("("+temp.idproducto_x+ ","+temp.idcate_y +") -> ");
+                                        
+                                        graf.append("p"+xx+"_"+yy +"[label=\"{<data>"+xx+","+yy+"|<next>"+ temp.nombrear+ "}\" pos=\""+x_grap+","+y_grap+"!\"]; \n");
+                                        //graf_matrix = graf_matrix + "p"+xx+"_"+yy +"[label=\"{<data>\"           "+xx+","+yy+"\"|<next> \""+ des_nod + "\"}\" pos=\""+xx+","+y_grap+"!\"]; \n";
+
+                                        //print_node_superiores(temp);
+						
+						/*para imprimir las flechas de la derecha*/
+						if (temp.right != null){
+                                                int xx2 = temp.right.idproducto_x;
+		    				int yy2 = temp.right.idcate_y;
+		    		
+                                                    graf.append("p"+xx+"_"+yy + "->p"+ xx2+"_"+yy2+"[dir=both]; \n");
+						}
+						
+						/*para imprimir las flechas de abajo*/
+						if (temp.down != null){
+
+                                                    int xx2 = temp.down.idproducto_x;
+                                                    int yy2 = temp.down.idcate_y;
+
+                                                    graf.append("p"+xx+"_"+yy + "->p"+ xx2+"_"+yy2+"[dir=both]; \n");
+						}
+				//	}
+											    	
+		    	temp = temp.right;
+			}
+			//cout<<"x: "<<temp->data<<" ";			
+			temp = temp_inicio;
+	    	temp = temp.down;  	
+	    	System.out.println();
+		}  	
+  
+		graf.append("\n}\n");
+		
+		//create_archivo(name_cap, graf_matrix);
+                this.graf_matrix(graf.toString());
+ 	
+    }
+    
+    public boolean graf_matrix(String grafica){
+        //File archivo =new File("hash_user.txt");
+        try
+            {
+            File archivo =new File("mat_carpetas.txt");
+            //File archivo =new File(name_graf+".txt");
+            FileWriter escribir= new FileWriter(archivo);
+            escribir.write(grafica);
+            escribir.close();
+            }
+
+            catch(Exception e)
+            {
+            JOptionPane.showMessageDialog(null, "Error al escribir","NANI",JOptionPane.ERROR_MESSAGE);
+            return false;
+            }
+        
+        try {
+
+            Runtime rt = Runtime.getRuntime();
+            //rt.exec( cmd );
+            Process p = rt.exec("neato -Tpng mat_carpetas.txt -o mat_carpetas.jpg");
+//            Process p;
+//            if (name_graf.equals("grafodir_carpetas")) {
+//                p = rt.exec("dot -Tpng "+name_graf+".txt -o "+name_graf+".jpg");
+//            } else{
+//                p = rt.exec("neato -Tpng "+name_graf+".txt -o "+name_graf+".jpg");
+//            }
+            
+            p.waitFor();
+            //rt.exec("hash_user.jpg");
+            Desktop.getDesktop().open(new File("mat_carpetas.jpg"));
+            
+            /////////////Desktop.getDesktop().open(new File(name_graf+".jpg"));
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(null, ex,"NANI",JOptionPane.ERROR_MESSAGE);
+                return false;
+            } finally {}
+        
+        return true;
+        
     }
     
 }

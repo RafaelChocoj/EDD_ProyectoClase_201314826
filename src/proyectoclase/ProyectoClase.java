@@ -23,6 +23,12 @@ public class ProyectoClase {
         session = new DataActualC(null);
         mat_productos = new Productos_matrix();
         
+        ProyectoClase.mat_productos.add(10, 5, "Chetos", 0.00, 0, "Snaks");
+        ProyectoClase.mat_productos.add(1, 1, "Coca Cola", 0.00, 0, "Bebidas");
+        ProyectoClase.mat_productos.add(3, 2, "Lapiz", 0.00, 0, "Utiles");
+        
+        ProyectoClase.mat_productos.add(9, 2, "Cuaderno", 0.00, 0, "Utiles");
+        
         //lis_user.Insert_fin("user1", "123", null);
         lis_user.Insert_fin("admin", "0", null);
         //lis_user.Insert_fin("rafael", "987", null);

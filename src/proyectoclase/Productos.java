@@ -60,6 +60,12 @@ public class Productos extends javax.swing.JDialog {
 
         jLabel4.setText("id Categoria:");
 
+        t_idcat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                t_idcatActionPerformed(evt);
+            }
+        });
+
         jLabel5.setText("Nombre Categoría:");
 
         b_guardar.setText("Guardar");
@@ -161,27 +167,33 @@ public class Productos extends javax.swing.JDialog {
         /*nombre prod*/
         if (t_nombre.getText().trim().length() == 0 || t_nombre.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Debe de ingresar Nombre del Producto","Error",JOptionPane.ERROR_MESSAGE);
+            return;
         }  
         
-        String idpro_str = t_id.getText();
         /*id*/
-        if (idpro_str.trim().length() == 0 || idpro_str.isEmpty()) {
+        int idprod;
+        if (t_id.getText().trim().length() == 0 || t_id.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Debe de ingresar id producto","Error",JOptionPane.ERROR_MESSAGE);
+            return;
         }   else    {
-            int idprod = Integer.parseInt(idpro_str);
+            idprod = Integer.parseInt(t_id.getText());
         }
         
         /*unidades*/
+        int unidades;
         if (t_unidades.getText().trim().length() == 0 || t_unidades.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Debe de ingresar unidades","Error",JOptionPane.ERROR_MESSAGE);
+            return;
         }   else    {
-            int unidades = Integer.parseInt(t_unidades.getText());
+            unidades = Integer.parseInt(t_unidades.getText());
         }
         /*unidades*/
+        double precio;
         if (t_precio.getText().trim().length() == 0 || t_precio.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Debe de ingresar Precio","Error",JOptionPane.ERROR_MESSAGE);
+            return;
         }   else    {
-            double precio = Double.parseDouble(t_precio.getText());
+            precio = Double.parseDouble(t_precio.getText());
         }
         
 
@@ -189,15 +201,28 @@ public class Productos extends javax.swing.JDialog {
         /*nombre categoria*/
         if (t_nomcat.getText().trim().length() == 0 || t_nomcat.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Debe de ingresar Nombre de la Categoria","Error",JOptionPane.ERROR_MESSAGE);
+            return;
         }  
         
         /*idcategoria*/
+        int idcat;
         if (t_idcat.getText().trim().length() == 0 || t_idcat.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Debe de ingresar id Categoria","Error",JOptionPane.ERROR_MESSAGE);
+            return;
         }   else    {
-            int idcat = Integer.parseInt(t_idcat.getText());
+            idcat = Integer.parseInt(t_idcat.getText());
         }
         
+        /*verificando si existe producto*/
+        NodeProducto nod_prod;
+        nod_prod = ProyectoClase.mat_productos.existeProducto(idprod);
+        if (nod_prod != null) {
+            JOptionPane.showMessageDialog(null, "Ya existe el Producto id " + nod_prod.idproducto_x +" " + nod_prod.nombrear,"Error",JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        //add (int x_prod, int y_cat, String nombreprod, double precio,int unidades, String cat_nomnbre)
+        ProyectoClase.mat_productos.add(idprod, idcat, nombre, precio, unidades, categori);
         
     }
     private void b_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_guardarActionPerformed
@@ -206,17 +231,31 @@ public class Productos extends javax.swing.JDialog {
         //add (int x_prod, int y_cat, String nombreprod, double precio,int unidades, String cat_nomnbre)
         
         
-        ProyectoClase.mat_productos.add(10, 5, "pro1", 0.00, 0, "cat");
-        ProyectoClase.mat_productos.add(1, 1, "pro2", 0.00, 0, "cat");
-        ProyectoClase.mat_productos.add(3, 2, "pro3", 0.00, 0, "cat");
-        
-        ProyectoClase.mat_productos.add(9, 2, "pro4", 0.00, 0, "cat");
+       
         
 //        ProyectoClase.mat_productos.print_x_header();
 //        ProyectoClase.mat_productos.print_y_header();
         
-        ProyectoClase.mat_productos.print_node_mat();
+        //ProyectoClase.mat_productos.print_node_mat();
+        
+        ProyectoClase.mat_productos.print_Grafica_matrix();
     }//GEN-LAST:event_b_guardarActionPerformed
+
+    private void t_idcatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_t_idcatActionPerformed
+        
+        /*idcategoria*/
+        int idcat;
+//        if (t_idcat.getText().trim().length() == 0 || t_idcat.getText().isEmpty()) {
+//            return;
+//        }   else    {
+            idcat = Integer.parseInt(t_idcat.getText());
+//        }
+        NodeProducto nod_cat;
+        nod_cat = ProyectoClase.mat_productos.existeCategoria(idcat);
+        if (nod_cat != null) {
+            t_nomcat.setText(nod_cat.nombrear);
+        }
+    }//GEN-LAST:event_t_idcatActionPerformed
 
     /**
      * @param args the command line arguments
