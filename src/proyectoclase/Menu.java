@@ -59,9 +59,9 @@ public class Menu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void b_productosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_productosActionPerformed
-        Productos articulos = new Productos();
+        Productos articulos = new Productos(this, rootPaneCheckingEnabled);
         articulos.setVisible(true);
-        this.dispose();
+        //this.dispose();
     }//GEN-LAST:event_b_productosActionPerformed
 
     /**

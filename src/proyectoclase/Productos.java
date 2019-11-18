@@ -1,5 +1,7 @@
 package proyectoclase;
 
+import javax.swing.JOptionPane;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -10,12 +12,14 @@ package proyectoclase;
  *
  * @author RAFAEL
  */
-public class Productos extends javax.swing.JFrame {
+public class Productos extends javax.swing.JDialog {
+
 
     /**
      * Creates new form Productos
      */
-    public Productos() {
+    public Productos(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
         initComponents();
     }
 
@@ -29,7 +33,6 @@ public class Productos extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        t_id = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         t_nombre = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
@@ -42,8 +45,10 @@ public class Productos extends javax.swing.JFrame {
         b_cancelar = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         t_unidades = new javax.swing.JFormattedTextField();
+        t_id = new javax.swing.JFormattedTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Nuevo Producto");
 
         jLabel1.setText("Id Producto:");
 
@@ -75,6 +80,8 @@ public class Productos extends javax.swing.JFrame {
 
         t_unidades.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
 
+        t_id.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -92,7 +99,6 @@ public class Productos extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(t_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 422, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(t_id, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(t_precio, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(53, 53, 53)
@@ -100,11 +106,12 @@ public class Productos extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(t_unidades, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(t_idcat, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(t_nomcat, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(t_nomcat, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(t_id, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(135, 135, 135)
+                        .addGap(71, 71, 71)
                         .addComponent(b_guardar)
-                        .addGap(18, 18, 18)
+                        .addGap(39, 39, 39)
                         .addComponent(b_cancelar)))
                 .addContainerGap(127, Short.MAX_VALUE))
         );
@@ -144,13 +151,61 @@ public class Productos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void b_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_cancelarActionPerformed
-        Menu men = new Menu();
-        men.setVisible(true);
+//        Menu men = new Menu();
+//        men.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_b_cancelarActionPerformed
 
+    public void Insert_Producto(){
+        String nombre = t_nombre.getText();
+        /*nombre prod*/
+        if (t_nombre.getText().trim().length() == 0 || t_nombre.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Debe de ingresar Nombre del Producto","Error",JOptionPane.ERROR_MESSAGE);
+        }  
+        
+        String idpro_str = t_id.getText();
+        /*id*/
+        if (idpro_str.trim().length() == 0 || idpro_str.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Debe de ingresar id producto","Error",JOptionPane.ERROR_MESSAGE);
+        }   else    {
+            int idprod = Integer.parseInt(idpro_str);
+        }
+        
+        /*unidades*/
+        if (t_unidades.getText().trim().length() == 0 || t_unidades.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Debe de ingresar unidades","Error",JOptionPane.ERROR_MESSAGE);
+        }   else    {
+            int unidades = Integer.parseInt(t_unidades.getText());
+        }
+        /*unidades*/
+        if (t_precio.getText().trim().length() == 0 || t_precio.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Debe de ingresar Precio","Error",JOptionPane.ERROR_MESSAGE);
+        }   else    {
+            double precio = Double.parseDouble(t_precio.getText());
+        }
+        
+
+        String categori = t_nomcat.getText();
+        /*nombre categoria*/
+        if (t_nomcat.getText().trim().length() == 0 || t_nomcat.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Debe de ingresar Nombre de la Categoria","Error",JOptionPane.ERROR_MESSAGE);
+        }  
+        
+        /*idcategoria*/
+        if (t_idcat.getText().trim().length() == 0 || t_idcat.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Debe de ingresar id Categoria","Error",JOptionPane.ERROR_MESSAGE);
+        }   else    {
+            int idcat = Integer.parseInt(t_idcat.getText());
+        }
+        
+        
+    }
     private void b_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_guardarActionPerformed
+        
+        Insert_Producto();
         //add (int x_prod, int y_cat, String nombreprod, double precio,int unidades, String cat_nomnbre)
+        
+        
         ProyectoClase.mat_productos.add(10, 5, "pro1", 0.00, 0, "cat");
         ProyectoClase.mat_productos.add(1, 1, "pro2", 0.00, 0, "cat");
         ProyectoClase.mat_productos.add(3, 2, "pro3", 0.00, 0, "cat");
@@ -190,10 +245,17 @@ public class Productos extends javax.swing.JFrame {
         }
         //</editor-fold>
 
-        /* Create and display the form */
+        /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Productos().setVisible(true);
+                Productos dialog = new Productos(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
             }
         });
     }
@@ -207,7 +269,7 @@ public class Productos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JTextField t_id;
+    private javax.swing.JFormattedTextField t_id;
     private javax.swing.JTextField t_idcat;
     private javax.swing.JTextField t_nombre;
     private javax.swing.JTextField t_nomcat;
