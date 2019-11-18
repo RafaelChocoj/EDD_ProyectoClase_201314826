@@ -330,9 +330,9 @@ public NodeProducto existeCategoria(int idcate) {
     while (temp != null) { 
         if (temp.idcate_y == idcate) {
             return temp;
-        }
+         }
         temp = temp.down;
-    }  	
+    } 	
     return null;
 }
 
