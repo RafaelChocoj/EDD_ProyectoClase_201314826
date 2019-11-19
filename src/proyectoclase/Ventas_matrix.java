@@ -7,6 +7,7 @@ package proyectoclase;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -20,9 +21,16 @@ public class Ventas_matrix {
 //    int size_y;
     
     public Ventas_matrix () {
-        
+        Date fec_0 = null;
+        Date hour_0 = null;
+        try {
+           fec_0 = fecha.parse("01/01/1970");
+           hour_0 = hora.parse("00:00");
+            
+        } catch (Exception e) {
+        }
         //public NodeVenta (String tipo, Date horas_x, int idcliente_y, Date fecha_z, String cliente, String usuario, double total, double monto, double vuelto)
-        NodeVenta temp = new NodeVenta("R",null, 0, null, "raiz", "raiz", 0,  0,0);
+        NodeVenta temp = new NodeVenta("R",hour_0, 0, fec_0, "raiz", "raiz", 0,  0,0);
         head = temp; 
         
 //        this.size = 0;
@@ -30,14 +38,14 @@ public class Ventas_matrix {
 //        this.size_y = 0;
     }
     
-    public void add (String tipo, Date horas_x, int idcliente_y, Date fecha_z, String cliente, String usuario, double total, double monto, double vuelto) {
-//    	//1 crear header
-//    	//1.1 creade x header
-//    	//cout<<"x: " <<x<<endl; 
-//    	add_z_header(z, file_capa);
+    public void add(Date horas_x, int idcliente_y, Date fecha_z, String cliente, String usuario, double total, double monto, double vuelto) {
+    	//1 crear header
+    	//1.1 creade x header
+    	//cout<<"x: " <<x<<endl; 
+    	add_z_header(fecha_z, "fecha_z");
 //    	add_x_header(x, z);
-//    	add_y_header(y, z);  	
-//    	//1.2 create y header
+    	add_y_header(idcliente_y, fecha_z, cliente);  	
+    	//1.2 create y header
 //    	
 //    	
 //    	//2 insert nodo
@@ -83,7 +91,58 @@ public class Ventas_matrix {
     ///////////insertando cabeceras
     SimpleDateFormat fecha = new SimpleDateFormat("dd/MM/yyyy");
     SimpleDateFormat hora = new SimpleDateFormat("HH:mm");
-    
+    ////para z
+    public void add_z_header(Date fecha_z, String file_capa) {
+    	  	
+//    	string nombre_cab = "";
+//    	nombre_cab = file_capa;
+
+        /*inicializando cordenadas en 0*/
+        Date fec_0 = null;
+        Date hour_0 = null;
+        try {
+           fec_0 = fecha.parse("01/01/1970");
+           hour_0 = hora.parse("00:00");
+            
+        } catch (Exception e) {
+        }
+    	
+    	if (head.capa_up == null) { 
+	    	//node *temp = new node(x);    	
+	    	NodeVenta temp = new NodeVenta("C",hour_0, 0, fecha_z, "", ProyectoClase.session.usuario_ac, 0, 0,0);
+	    	head.capa_up = temp;
+	    	temp.capa_down = head; 
+    	} else  {     	
+		NodeVenta temp =head;
+		//while (temp.capa_up != null && temp.capa_up.data < z ) { 
+                while (temp.capa_up != null && temp.capa_up.fecha_z.before(fecha_z)) { 
+			temp = temp.capa_up;
+    	}
+
+			 if (temp.capa_up == null ) { 
+		    	//node *new_temp = new node(z);
+		    	NodeVenta new_temp = new NodeVenta("C",hour_0, 0, fecha_z, "", ProyectoClase.session.usuario_ac, 0, 0,0);
+		    	temp.capa_up = new_temp;
+		    	new_temp.capa_down = temp; 
+		    	
+                        //}else if (temp.capa_up != null && temp.capa_up.data != z )
+	    		}else if (temp.capa_up != null && !temp.capa_up.fecha_z.equals(fecha_z) )
+				{
+	    			NodeVenta new_temp = new NodeVenta("C",hour_0, 0, fecha_z, "", ProyectoClase.session.usuario_ac, 0, 0,0);
+	    			NodeVenta c_up = temp.capa_up;
+	    			
+	    			temp.capa_up =new_temp;
+	    			new_temp.capa_down = temp;
+	    			
+	    			new_temp.capa_up = c_up;
+	    			c_up.capa_down = new_temp;
+	    			
+				
+				}
+    	
+    	}
+    }
+    //////////////////
     public void add_y_header(int y_cliente, Date z_fecha, String cliente) {
 
         /*inicializando cordenadas en 0*/
@@ -102,6 +161,7 @@ public class Ventas_matrix {
 		/*recorre por z, para insertar a la derecha*/	
 //		while(head_y.cor_z != z){
                 while(!head_y.fecha_z.equals(z_fecha)){
+                    //JOptionPane.showMessageDialog(null, head_y.fecha_z);
                     head_y = head_y.capa_up;
 		}
     		

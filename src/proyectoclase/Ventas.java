@@ -604,8 +604,11 @@ public class Ventas extends javax.swing.JDialog {
         Date fecor = null;
         Date hourcor = null;
         try {
-           fecor = fecha.parse("20/11/2019");
-           hourcor = hora.parse("04:05");
+//           fecor = fecha.parse("20/11/2019");
+//           hourcor = hora.parse("04:05");
+           
+           fecor = fecha.parse("01/01/1970");
+           hourcor = hora.parse("00:00");
             
         } catch (Exception e) {
         }
@@ -628,6 +631,7 @@ public class Ventas extends javax.swing.JDialog {
     
 //        JOptionPane.showMessageDialog(null, fec ,"fec",JOptionPane.ERROR_MESSAGE);
 //        JOptionPane.showMessageDialog(null, fecor ,"fecor",JOptionPane.ERROR_MESSAGE);
+        
         if (fecor.before(fec)) {
           JOptionPane.showMessageDialog(null, fecor + " < " +fec ,"before",JOptionPane.ERROR_MESSAGE);  
         }
