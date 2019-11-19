@@ -79,10 +79,11 @@ public class Ventas_matrix {
     	//////////////add_y_z0(new_z0, x, y, z);
     	
     	add_x(new_node,  horas_x, idcliente_y, fecha_z);
+        add_y(new_node,  horas_x, idcliente_y, fecha_z);
 //    	add_y(new_node, x, y, z);
-//    	
-//    	/////******/esto para insertar en z. pero ya no
-//    	////////////add_z(new_node, x, y, z);
+    	
+    	/////******/esto para insertar en z. pero ya no
+    	////////////add_z(new_node, x, y, z);
     	
   
           
@@ -327,7 +328,72 @@ public class Ventas_matrix {
 		}
 	}
     
-    
+    public void add_y(NodeVenta new_node, Date x_hora, int y_cliente, Date z_fecha){
+            NodeVenta tem= head;
+            /*primero recorre prufundidad*/
+            /*recorre por z, para insertar a la derecha*/
+            //while(tem.cor_z != z){
+            while(tem.fecha_z != z_fecha){
+            tem = tem.capa_up;
+            }
+
+            /*recorre por y, para insertar a la derecha (x)*/
+            //while(tem.cor_y != y){
+            while(tem.idcliente_y != y_cliente){
+            tem = tem.down;
+            }
+            if(tem.right == null){
+                    tem.right = new_node;
+                    new_node.left = tem;
+            }
+            //else if(tem.right.cor_x >= x ){
+            else if(tem.right.horas_x.after(x_hora) || tem.right.horas_x.equals(x_hora) ){
+
+               //if(tem.right.cor_y == y && tem.right.cor_x == x ){ ///nre para que no se repita
+               if(tem.right.idcliente_y == y_cliente && tem.right.horas_x.equals(x_hora) ){ ///nre para que no se repita
+            }else{
+                        NodeVenta ul_der = tem.right;
+
+                        tem.right = new_node;
+                        new_node.left = tem;
+
+                        //para que enlace el que estaba antes
+                        new_node.right = ul_der;
+                        ul_der.left = new_node;
+                    }
+            }
+            else
+            {
+                    NodeVenta temp_der = tem.right;
+                    //while (temp_der.right != null && temp_der.right.cor_x <= x ) {  
+                    while (temp_der.right != null && (temp_der.right.horas_x.before(x_hora) || temp_der.right.horas_x.equals(x_hora) ) ) {  
+                            temp_der = temp_der.right;
+            }
+            //if(temp_der.cor_y == y && temp_der.cor_x == x ){  /// inic nre parte para que nos repita
+            if(temp_der.idcliente_y == y_cliente && temp_der.horas_x.equals(x_hora) ){  /// inic nre parte para que nos repita
+            }else{
+
+                    NodeVenta ul_der = null;
+                    if (temp_der.right != null ){
+                            ul_der = temp_der.right;
+                    } /// fin new parte para que nos repita
+
+            temp_der.right = new_node;
+                    new_node.left = temp_der;
+
+                    //para que enlace el que estaba antes
+                            if (ul_der != null ){
+
+                            new_node.right = ul_der;
+                                    ul_der.left = new_node;
+                            }
+                    }
+
+
+            }
+    }
+	
+        
    public void print_z_header() {
     NodeVenta temp = head;
     while (temp != null) { 
