@@ -43,46 +43,46 @@ public class Ventas_matrix {
     	//1.1 creade x header
     	//cout<<"x: " <<x<<endl; 
     	add_z_header(fecha_z, "fecha_z");
-//    	add_x_header(x, z);
+    	add_x_header(horas_x, fecha_z);
     	add_y_header(idcliente_y, fecha_z, cliente);  	
     	//1.2 create y header
-//    	
-//    	
-//    	//2 insert nodo
-//    	//node *new_node = new node(value);
-//    	node *new_node = new node(value, x, y, z, "N", valor);
-//    	//add_x(new_node, x);
-//    	//add_y(new_node, y, x);
-//    	
-//    	//primero insertamos profundidad
-//    	//add_z(new_node, x, y);
-//    	
-//    	//add_x(new_node, x, y);
-//    	//add_y(new_node, x, y);
-//    	
-//    	/* inicio para insertar nodo de profunidad inserta 0 en z	*/
-//    	node *new_z0 = new node(0, x, y, 0, "C", "C");
-//    	//node *new_z0 = new node(value, x, y, 0);
-//
-//    	/* fin para insertar nodo de profunidad inserta 0 en z	*/
-//    	
-//    	///**********insertando nodos**************/////
-//    	add_x_header_z0(x, z);
-//    	add_y_header_z0(y, z);  
-//    	
-//    	//add_x(new_node, x, y, z);
-//    	//add_y(new_node, x, y, z);
-//    	
-//    	
-//    	//////**********//esto para insertar en z. pero ya no
-//    	//////////////add_x_z0(new_z0, x, y, z);
-//    	//////////////add_y_z0(new_z0, x, y, z);
-//    	
-//    	add_x(new_node, x, y, z);
+    	
+    	
+    	//2 insert nodo
+    	//node *new_node = new node(value);
+    	NodeVenta new_node = new NodeVenta("N", horas_x, idcliente_y, fecha_z, cliente, usuario, total, monto, vuelto);
+    	//add_x(new_node, x);
+    	//add_y(new_node, y, x);
+    	
+    	//primero insertamos profundidad
+    	//add_z(new_node, x, y);
+    	
+    	//add_x(new_node, x, y);
+    	//add_y(new_node, x, y);
+    	
+    	/* inicio para insertar nodo de profunidad inserta 0 en z	*/
+    	////////////////////////node *new_z0 = new node(0, x, y, 0, "C", "C");
+    	//node *new_z0 = new node(value, x, y, 0);
+
+    	/* fin para insertar nodo de profunidad inserta 0 en z	*/
+    	
+    	///**********insertando nodos**************/////
+    	/////////////add_x_header_z0(x, z);
+    	///////////////add_y_header_z0(y, z);  
+    	
+    	//add_x(new_node, x, y, z);
+    	//add_y(new_node, x, y, z);
+    	
+    	
+    	//////**********//esto para insertar en z. pero ya no
+    	//////////////add_x_z0(new_z0, x, y, z);
+    	//////////////add_y_z0(new_z0, x, y, z);
+    	
+    	add_x(new_node,  horas_x, idcliente_y, fecha_z);
 //    	add_y(new_node, x, y, z);
 //    	
-//    	///////******/esto para insertar en z. pero ya no
-//    	//////////////add_z(new_node, x, y, z);
+//    	/////******/esto para insertar en z. pero ya no
+//    	////////////add_z(new_node, x, y, z);
     	
   
           
@@ -258,6 +258,75 @@ public class Ventas_matrix {
     	
     	}
     }
+    
+    ////////////////////////////////////////////insertando nodos
+    public void add_x(NodeVenta new_node, Date x_hora, int y_cliente, Date z_fecha){
+    	NodeVenta tem = head;
+    	
+    	/*primero recorre prufundidad*/
+		/*recorre por z, para insertar a la derecha*/	
+		//while(tem.fecha_z != z){
+                while(!tem.fecha_z.equals(z_fecha)){
+    		tem = tem.capa_up;
+		}		
+		//////////////*************************
+		
+    	/*recorre por x, para insertar a abajo (y)*/	
+        //while(tem.horas_x != x){
+    	while(!tem.horas_x.equals(x_hora)){
+    		tem = tem.right;
+		}
+		if(tem.down == null){
+			tem.down = new_node;
+			new_node.up = tem;
+		} 
+		/*si y es mejor al ultimo*/
+		else if(tem.down.idcliente_y >= y_cliente ){
+			
+                        //if(tem.down.idcliente_y == y_cliente && tem.down.horas_x == x ){ ///nre para repetidos
+			if(tem.down.idcliente_y == y_cliente && tem.down.horas_x.equals(x_hora) ){ ///nre para repetidos
+			}else{
+
+				NodeVenta ul_down = tem.down;
+			   	
+				tem.down = new_node;
+				new_node.up = tem;
+				
+				//para que enlace el que estaba antes
+				new_node.down = ul_down;
+				ul_down.up = new_node;
+			} //fin nre para repetidos
+		
+		}
+		else
+		{			
+			NodeVenta temp_abaj = tem.down; 
+                        //while (temp_abaj.down != null && temp_abaj.down.cor_y <= y ) { 
+			while (temp_abaj.down != null && temp_abaj.down.idcliente_y <= y_cliente ) { 
+				temp_abaj = temp_abaj.down;
+    		}
+    		//if(temp_abaj.cor_y == y && temp_abaj.cor_x == x ){ //in new para repetidos
+    		if(temp_abaj.idcliente_y == y_cliente && temp_abaj.horas_x == x_hora ){ //in new para repetidos
+    		}else{
+    			NodeVenta ul_down = null;  /// in  new para no insertar repetido
+    			if (temp_abaj.down != null ){
+    				ul_down = temp_abaj.down;
+				} /// fi new para no insertar repetido
+    			
+	    		temp_abaj.down = new_node;
+				new_node.up = temp_abaj;
+				
+				//para que enlace el que estaba antes
+				if (ul_down != null ){
+										
+    				new_node.down = ul_down;
+					ul_down.up = new_node;
+				}
+				
+			} //fin new para repetidos
+		}
+	}
+    
     
    public void print_z_header() {
     NodeVenta temp = head;

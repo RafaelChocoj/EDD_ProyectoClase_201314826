@@ -60,8 +60,8 @@ public class ProyectoClase {
         } catch (Exception e) {
         }
         mat_ventas.add(h1_x, 1, f1_z, "cliente1", "us1", 0, 0, 0);
-        mat_ventas.add(h2_x, 2 ,f1_z, "cliente2", "us1", 0, 0, 0);
-        mat_ventas.add(h2_x, 3 ,f2_z, "cliente3", "us1", 0, 0, 0);
+        mat_ventas.add(h2_x, 3 ,f1_z, "cliente3", "us1", 0, 0, 0);
+        mat_ventas.add(h2_x, 2 ,f2_z, "cliente2", "us1", 0, 0, 0);
         
         mat_ventas.print_z_header();
         loguinC log = new loguinC();
