@@ -318,7 +318,16 @@ public NodeProducto existeProducto(int produ_x) {
     NodeProducto temp = head;
     while (temp != null) { 
         if (temp.idproducto_x == produ_x) {
-            return temp;
+            
+            if (temp.down != null){
+                NodeProducto temp_abaj = temp.down;
+                while (temp_abaj != null) { 
+                    if (temp_abaj.idproducto_x == produ_x) {
+                        return temp_abaj;
+                    }
+                    temp_abaj = temp_abaj.down;
+                }
+            }
         }
         temp = temp.right;
     }  	
