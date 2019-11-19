@@ -47,14 +47,23 @@ public class ProyectoClase {
         SimpleDateFormat hora = new SimpleDateFormat("HH:mm");
         Date f1_z = null;
         Date h1_x = null;
+        
+        Date f2_z = null;
+        Date h2_x = null;
         try {
            f1_z = fecha.parse("19/11/2019");
            h1_x = hora.parse("01:20");
+           
+           f2_z = fecha.parse("25/11/2019");
+           h2_x = hora.parse("02:50");
             
         } catch (Exception e) {
         }
-        mat_ventas.add(h1_x, 1,f1_z, "cliente1", "us1", 0, 0, 0);
+        mat_ventas.add(h1_x, 1, f1_z, "cliente1", "us1", 0, 0, 0);
+        mat_ventas.add(h2_x, 2 ,f1_z, "cliente2", "us1", 0, 0, 0);
+        mat_ventas.add(h2_x, 3 ,f2_z, "cliente3", "us1", 0, 0, 0);
         
+        mat_ventas.print_z_header();
         loguinC log = new loguinC();
         log.setVisible(true);
         
