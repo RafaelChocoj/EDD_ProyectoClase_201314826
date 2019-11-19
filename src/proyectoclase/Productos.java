@@ -77,10 +77,21 @@ public class Productos extends javax.swing.JDialog {
 
         t_precio.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("###0.##"))));
         t_precio.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        t_precio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                t_precioActionPerformed(evt);
+            }
+        });
 
         jLabel4.setText("id Categoria:");
 
         jLabel5.setText("Nombre Categoría:");
+
+        t_nomcat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                t_nomcatActionPerformed(evt);
+            }
+        });
 
         jLabel6.setText("Unidades:");
 
@@ -323,6 +334,14 @@ public class Productos extends javax.swing.JDialog {
     private void bom_catActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bom_catActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_bom_catActionPerformed
+
+    private void t_precioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_t_precioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_t_precioActionPerformed
+
+    private void t_nomcatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_t_nomcatActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_t_nomcatActionPerformed
 
     /**
      * @param args the command line arguments
