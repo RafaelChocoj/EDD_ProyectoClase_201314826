@@ -5,6 +5,9 @@
  */
 package proyectoclase;
 
+import java.awt.Desktop;
+import java.io.File;
+import java.io.FileWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JOptionPane;
@@ -432,6 +435,286 @@ public NodeVenta existeCliente_z(int idcliente_y) {
     return null;
 }
 
+
+/*retorna capa de fecha*/
+public NodeVenta existeFecha(Date fecha_z) {
+    NodeVenta temp = head;
+    while (temp != null) { 
+        if (temp.fecha_z.equals(fecha_z)) {
+            
+//            if (temp.down != null){
+//                NodeProducto temp_abaj = temp.down;
+//                while (temp_abaj != null) { 
+//                    if (temp_abaj.idproducto_x == produ_x) {
+                        return temp;
+//                    }
+//                    temp_abaj = temp_abaj.down;
+//                }
+//            }
+        }
+        temp = temp.capa_up;
+    }  	
+    return null;
+}
+
+///////////////////////////////inicio grafica venta
+public int alto_mat_x_cap(NodeVenta matrix_capa){
+    int alt = 0;
+
+    //NodeVenta temp = head;
+    NodeVenta temp = matrix_capa;
+    while (temp.down != null) {
+        alt++;
+        //JOptionPane.showMessageDialog(null,"alto temp: " + temp.dir_completo);
+        temp = temp.down;
+    }
+    alt++;
+    return alt;
+}
+
+ public int cor_x_hora(Date hor_x, NodeVenta ven_cap) {
+    //NodeVenta temp = head;
+    NodeVenta temp = ven_cap;
+    int corx = 0;
+    while (temp != null) { 
+        if (temp.horas_x.equals(hor_x)) { 
+            return corx;
+        }
+        corx++;
+        temp = temp.right;
+    }  	
+    return 0;
+}
+ 
+ public int cor_y_carpeta(int clie_y, NodeVenta ven_cap) {
+    //NodeVenta temp = head;
+    NodeVenta temp = ven_cap;
+    int cory = 0;
+    while (temp != null) { 
+        if (temp.idcliente_y == clie_y) { 
+            return cory;
+        }
+        cory++;
+        temp = temp.down;
+    }  	
+    return 0;
+}
+ 
+public boolean print_Grafica_matrix(NodeVenta matrix_capa) {
+        
+        StringBuilder graf  = new StringBuilder(); //grafica total
+
+    	int alto;
+        
+        SimpleDateFormat formato_fecha = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        
+        int y_grap;
+        int x_grap;
+        int xx, yy;
+        xx = 0;
+        yy = 0;
+    	
+    	graf.append("");
+		graf.append("digraph{ \n");
+		graf.append("rankdir=BT;\n");
+		//graf_matrix = graf_matrix + "graph [nodesep=5.5]; \n";
+		graf.append("node[shape=record]; \n");
+		//graf_matrix = graf_matrix + "node[shape=record ,width=2.0]; \n";
+		graf.append("graph[pencolor=transparent]; \n");
+		graf.append("node [style=filled]; \n");
+    	
+                
+    	//NodeVenta temp = head;
+    	NodeVenta temp = matrix_capa;
+    	
+    	//alto = alto_mat();
+    	alto = alto_mat_x_cap(matrix_capa);
+    	//cout<<"alto_nod: "<<alto<<endl;
+        //JOptionPane.showMessageDialog(null,"raiz: " + temp.dir_completo);
+    	
+    	//node *temp = nodo_x_nivel;
+    	NodeVenta temp_inicio;
+    	
+    	NodeVenta temp_sup_ini;
+		   	
+        String fecha_str = "";
+        if (temp.fecha_z != null) {
+            fecha_str =  fecha.format(temp.fecha_z);
+        }
+                                                
+    	/*para recorrer para la derecha*/
+    	//while (temp->down != NULL) { 
+    	while (temp != null) { 
+	    	temp_inicio = temp;
+	    	/*para recorrer para abajo*/
+	    	//while (temp->right != NULL) { 
+                String car_pad = "";
+  
+	    	while (temp != null) { 
+
+                                       
+                                        if (xx == 0 || yy == 0) {
+                                        }else{
+                                            ////////////xx = cor_x_carpeta(temp.dir_completo);
+                                            xx = cor_x_hora(temp.horas_x, matrix_capa);
+                                        }
+                                        
+                                        y_grap = alto - yy;;
+                                        
+                                        y_grap = y_grap*2;
+                                        x_grap = xx*3;
+                                        
+
+                                                //graf_matrix = graf_matrix + "p"+xx+yy +"[label=\"{<data>"+xx+","+yy+"|<next>}\" pos=\""+xx+","+y_grap+"!\"]; \n";
+						//graf_matrix = graf_matrix + "p"+xx+"_"+yy +"[label=\"{<data>"+xx+","+yy+"|<next>"+ temp->valor+ "}\" pos=\""+xx+","+y_grap+"!\"]; \n";
+						
+						/////////////////////////////////////////////graf_matrix = graf_matrix + "p"+xx+"_"+yy +"[label=\"{<data>"+xx+","+yy+"|<next>"+ temp->valor+ "}\" pos=\""+x_grap+","+y_grap+"!\"]; \n";
+                                                //graf.append("p"+xx+"_"+yy +"[label=\"{<data>"+xx+","+yy+"|<next>"+ temp.nombre+ "}\" pos=\""+x_grap+","+y_grap+"!\"]; \n");
+                                                
+                                                String hora_str = "";
+                                                if (temp.horas_x != null) {
+                                                    hora_str =  hora.format(temp.horas_x);
+                                                }
+//                                                String fecha_str = "";
+//                                                if (temp.fecha_z != null) {
+//                                                    fecha_str =  fecha.format(temp.fecha_z);
+//                                                }
+                                                 
+////////////                                                int carpetas = CantidadCarpetas(temp.dir_completo);
+////////////                                                int files =0;
+////////////                                                if (temp.arbol_archivos != null) {
+////////////                                                    files = temp.arbol_archivos.Cantfiles();
+////////////                                                }
+                                                
+                                                //System.out.print(temp.dir_completo+" -> ");
+                                                //graf.append("p"+xx+"_"+yy +"[label=\"{<data>"+xx+","+yy+"|<next>"+  temp.dir_completo+ "\\n" + temp.dir_padre + "\\n" + temp.nombre + "}\" pos=\""+x_grap+","+y_grap+"!\"]; \n");
+                                                if (temp.tipo.equals("N")) {
+//                                                graf.append("p"+xx+"_"+yy +"[label=\"{<data>"+xx+","+yy+"|<next>"+  temp.nombre 
+//                                                        + "\\n" + "carpetas: "+carpetas +  "\\n" + "archivos: "+files + "\\n" + fech + "}\" pos=\""+x_grap+","+y_grap+"!\"]; \n");
+                                                
+//                                                graf.append("p"+xx+"_"+yy +"[label=\"{<data>"+xx+","+yy+"|<next>"+  hora_str
+//                                                        + "\\n" + "cliente: "+temp.cliente +  "\\n" + "archivos: "+files + "\\n" + fech + "}\" pos=\""+x_grap+","+y_grap+"!\"]; \n");
+
+                                                            graf.append("p"+xx+"_"+yy +"[label=\"{<data>"+xx+","+yy+"|<next>"+  hora_str
+                                                        + "\\n" +temp.cliente + "\\n" +temp.total + "}\" pos=\""+x_grap+","+y_grap+"!\"]; \n");
+                                                
+                                                } else {
+//                                                    graf.append("p"+xx+"_"+yy +"[label=\"{<data>"+xx+","+yy+"|<next>"+  temp.nombre 
+//                                                        + "\\n" + "carpetas: "+carpetas +  "\\n" +  "}\" pos=\""+x_grap+","+y_grap+"!\"]; \n");
+                                                    
+                                                    if (yy == 0 && xx == 0) {
+                                                        //JOptionPane.showMessageDialog(null, "raiz","info",JOptionPane.ERROR_MESSAGE);
+                                                        graf.append("p"+xx+"_"+yy +"[label=\"{<data>"+xx+","+yy+"|<next>"+  fecha_str 
+                                                        +  "}\" pos=\""+x_grap+","+y_grap+"!\"]; \n");
+                                                    } else if (yy == 0) {
+                                                        graf.append("p"+xx+"_"+yy +"[label=\"{<data>"+xx+","+yy+"|<next>"+  hora_str 
+                                                        +  "}\" pos=\""+x_grap+","+y_grap+"!\"]; \n");
+                                                    } else if (xx == 0) {
+                                                         graf.append("p"+xx+"_"+yy +"[label=\"{<data>"+xx+","+yy+"|<next>"+  
+                                                        temp.cliente +  "}\" pos=\""+x_grap+","+y_grap+"!\"]; \n");
+                                                    } 
+                                                    
+                                                     
+                                                }
+                                                
+                                                //graf.append("p"+xx+"_"+yy +"[label=\"{<data>"+xx+","+yy+"|<next>"+  temp.nombre + " : " + temp.tipo+ "}\" pos=\""+x_grap+","+y_grap+"!\"]; \n");
+                
+                                               
+                                                
+						
+                                            /*para imprimir las flechas de la derecha*/
+                                            if (temp.right != null){
+
+//                                                    int xx2 = xx+1; 
+//                                                    int yy2 = yy;
+                                                    int xx2 = 0;
+//                                                    if (xx == 0 || yy == 0) {
+//                                                        //xx2 = xx+1;
+//                                                    }else{
+                                                        xx2 = cor_x_hora(temp.right.horas_x, matrix_capa);
+//                                                    }
+
+                                                    //graf_matrix = graf_matrix + "p"+xx+"_"+yy + "->p"+ xx2+"_"+yy2+"[dir=both]; \n";
+                                                    graf.append("p"+xx+"_"+yy + "->p"+ xx2+"_"+yy+"; \n");
+                                            }
+
+                                            /*para imprimir las flechas de abajo*/
+                                            if (temp.down != null){
+
+
+                                                    //int xx2 = xx; 
+                                                    int yy2 = 0;
+                                                    yy2 = cor_y_carpeta(temp.down.idcliente_y, matrix_capa);
+
+                                                    graf.append("p"+xx+"_"+yy + "->p"+ xx+"_"+yy2+"; \n");
+                                                    //graf_matrix = graf_matrix + "p"+xx+"_"+yy + "->p"+ xx2+"_"+yy2+"[dir=both]; \n";
+                                            }
+				    	
+                        xx++;
+		    	temp = temp.right;
+			}
+	
+			temp = temp_inicio;
+                yy++;
+                xx = 0;
+	    	temp = temp.down;  	
+//                System.out.println();
+		}  	
+
+		graf.append("\n}\n");
+
+		//create_archivo(name_cap, graf_matrix);
+                return this.graf_matrix(graf.toString(), "mat_ventas");
+ 	
+    }
+
+
+public boolean graf_matrix(String grafica, String name_graf){
+        //File archivo =new File("hash_user.txt");
+        try
+            {
+            //File archivo =new File("mat_carpetas.txt");
+            File archivo =new File(name_graf+".txt");
+            FileWriter escribir= new FileWriter(archivo);
+            escribir.write(grafica);
+            escribir.close();
+            }
+
+            catch(Exception e)
+            {
+            JOptionPane.showMessageDialog(null, "Error al escribir","NANI",JOptionPane.ERROR_MESSAGE);
+            return false;
+            }
+        
+        try {
+
+            Runtime rt = Runtime.getRuntime();
+            //rt.exec( cmd );
+            //Process p = rt.exec("neato -Tpng mat_carpetas.txt -o mat_carpetas.jpg");
+            Process p;
+//            if (name_graf.equals("grafodir_carpetas")) {
+//                p = rt.exec("dot -Tpng "+name_graf+".txt -o "+name_graf+".jpg");
+//            } else{
+                p = rt.exec("neato -Tpng "+name_graf+".txt -o "+name_graf+".jpg");
+//            }
+            
+            p.waitFor();
+            //rt.exec("hash_user.jpg");
+            ////Desktop.getDesktop().open(new File("mat_carpetas.jpg"));
+            
+            Desktop.getDesktop().open(new File(name_graf+".jpg"));
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(null, ex,"NANI",JOptionPane.ERROR_MESSAGE);
+                return false;
+            } finally {}
+        
+        return true;
+        
+    }
+
+//////////////////////////////////fin grafica
 public NodeVenta existeCliente_des(int idcliente_y) {
     //System.out.println();
     

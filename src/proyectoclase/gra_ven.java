@@ -108,9 +108,17 @@ public class gra_ven extends javax.swing.JFrame {
             return;
         }
         
-        JOptionPane.showMessageDialog(null, fec,"Error",JOptionPane.ERROR_MESSAGE);
+        //JOptionPane.showMessageDialog(null, fec,"Error",JOptionPane.ERROR_MESSAGE);
         
         //retornado nodo;
+        NodeVenta nod_ven;
+        nod_ven = ProyectoClase.mat_ventas.existeFecha(fec);
+        if (nod_ven != null) {
+            ProyectoClase.mat_ventas.print_Grafica_matrix(nod_ven);
+        } else {
+            JOptionPane.showMessageDialog(null, "ingrese fecha correcta","Error",JOptionPane.ERROR_MESSAGE);
+            
+        }
         
     }//GEN-LAST:event_b_grafActionPerformed
 

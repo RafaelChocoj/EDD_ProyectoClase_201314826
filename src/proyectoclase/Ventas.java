@@ -273,6 +273,11 @@ public class Ventas extends javax.swing.JDialog {
                 com_prodItemStateChanged(evt);
             }
         });
+        com_prod.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                com_prodActionPerformed(evt);
+            }
+        });
 
         t_producto.setEditable(false);
         t_producto.setOpaque(false);
@@ -842,6 +847,10 @@ public class Ventas extends javax.swing.JDialog {
     private void b_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_guardarActionPerformed
         InsertVenta();
     }//GEN-LAST:event_b_guardarActionPerformed
+
+    private void com_prodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_com_prodActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_com_prodActionPerformed
 
     /**
      * @param args the command line arguments
