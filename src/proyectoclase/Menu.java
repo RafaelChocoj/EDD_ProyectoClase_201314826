@@ -95,7 +95,9 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_b_ventasActionPerformed
 
     private void b_lis_prodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_lis_prodActionPerformed
-        // TODO add your handling code here:
+        ListaProd listapor = new ListaProd();
+        listapor.setVisible(true);
+                
     }//GEN-LAST:event_b_lis_prodActionPerformed
 
     /**

@@ -594,6 +594,9 @@ public class Ventas extends javax.swing.JDialog {
     private void b_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_addActionPerformed
         if (nod_cat != null) {
             detalles.addRow(new Object[]{nod_cat.idproducto_x, nod_cat.nombrear, 1, nod_cat.precio });
+            if (nod_cat.unidades <= 0.00) {
+                JOptionPane.showMessageDialog(null, "No tiene unidades suficientes para facturar\n " +  nod_cat.unidades, "Atencion",JOptionPane.INFORMATION_MESSAGE);
+            }
             ActulizandoTotal();
         }
         //detalles.addRow(new Object[]{users[0],users[1] });
