@@ -50,18 +50,27 @@ public class ProyectoClase {
         
         Date f2_z = null;
         Date h2_x = null;
+        
+        Date f3_z = null;
+        Date h3_x = null;
+        
         try {
            f1_z = fecha.parse("19/11/2019");
            h1_x = hora.parse("01:20");
            
            f2_z = fecha.parse("25/11/2019");
            h2_x = hora.parse("02:50");
+           
+//           f3_z = fecha.parse("25/12/2019");
+//           h3_x = hora.parse("23:50");
             
         } catch (Exception e) {
         }
         mat_ventas.add(h1_x, 1, f1_z, "cliente1", "us1", 0, 0, 0);
         mat_ventas.add(h2_x, 3 ,f1_z, "cliente3", "us1", 0, 0, 0);
         mat_ventas.add(h2_x, 2 ,f2_z, "cliente2", "us1", 0, 0, 0);
+        
+        //mat_ventas.add(h3_x, 3 ,f3_z, "cliente33", "us1", 0, 0, 0);
         
         mat_ventas.print_z_header();
         loguinC log = new loguinC();

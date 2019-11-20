@@ -28,7 +28,8 @@ public class Ventas extends javax.swing.JDialog {
         initComponents();
         lab_ven.setText("Vendedor: " + ProyectoClase.session.usuario_ac);
         llenado_Produtos();
-        
+        t_tot.setText("0.0");
+        InsertFecha();
         detalles = (DefaultTableModel)tab_det.getModel();
         
         detalles.addTableModelListener(new TableModelListener() {
@@ -50,8 +51,53 @@ public class Ventas extends javax.swing.JDialog {
             }
         });
         
-        
+        llenado_cliente();
     }
+    
+    public void llenado_cliente(){
+        
+        Date fech_o = null;
+        try {           
+           fech_o = fecha.parse("01/01/1970");            
+        } catch (Exception e) {
+        }
+        
+        com_cliente.removeAllItems();
+        NodeVenta temp = ProyectoClase.mat_ventas.head;
+        while (temp != null) { 
+            
+            if (!temp.fecha_z.equals(fech_o)) {
+                llenado_cliente_y(temp);
+            }
+            temp = temp.capa_up;
+        }
+    }
+    
+    public void llenado_cliente_y(NodeVenta clie_z){
+        NodeVenta temp = clie_z;
+        while (temp != null) { 
+            
+            if (temp.idcliente_y != 0) {
+                if (ya_enlista(String.valueOf(temp.idcliente_y)) == false) {
+                    com_cliente.addItem(String.valueOf(temp.idcliente_y));
+                }
+                
+            }
+            temp = temp.down;
+        }
+    }
+    
+    public boolean ya_enlista(String clien){
+        for (int i = 0; i < com_cliente.getItemCount(); i++) {
+            String cl = com_cliente.getItemAt(i);
+            if (cl.equals(clien)) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    
     
       SimpleDateFormat fecha = new SimpleDateFormat("dd/MM/yyyy");
       SimpleDateFormat hora = new SimpleDateFormat("HH:mm");
@@ -73,24 +119,13 @@ public class Ventas extends javax.swing.JDialog {
 //      JOptionPane.showMessageDialog(null, str_fec,"str_fec",JOptionPane.ERROR_MESSAGE);
 //      JOptionPane.showMessageDialog(null, str_hor,"str_hor",JOptionPane.ERROR_MESSAGE);
       
-////      Date fec = fecha.parse(fecha.format(hoy).toString());
-         Date fec = null;
-         Date hour = null;
-        try {
-           //fec = fecha.parse(str_fec);
-           fec = fecha.parse(t_fecha.getText());
-            
-        } catch (Exception e) {
-        }
-        try {
-           //hour = hora.parse(str_hor);
-           hour = hora.parse(t_hora.getText());
-            
-        } catch (Exception e) {
-        }
-    
-        JOptionPane.showMessageDialog(null, fec ,"fec",JOptionPane.ERROR_MESSAGE);
-        JOptionPane.showMessageDialog(null,hour,"hour",JOptionPane.ERROR_MESSAGE);
+    hoy = new Date();
+           JOptionPane.showMessageDialog(null, hoy,"hoy",JOptionPane.ERROR_MESSAGE);
+           t_fecha.setText(fecha.format(hoy));
+   ////        f_fecha1.setText(fecha.format(hoy).toString());
+
+           t_hora.setText(hora.format(hoy));
+   //        t_hora1.setText(hora.format(hoy).toString());
     }
     
     
@@ -123,8 +158,6 @@ public class Ventas extends javax.swing.JDialog {
         jLabel5 = new javax.swing.JLabel();
         t_fecha = new javax.swing.JFormattedTextField();
         t_hora = new javax.swing.JFormattedTextField();
-        f_fecha1 = new javax.swing.JTextField();
-        t_hora1 = new javax.swing.JTextField();
         lab_ven = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
@@ -154,6 +187,18 @@ public class Ventas extends javax.swing.JDialog {
 
         jLabel1.setText("Id Cliente:");
 
+        com_cliente.setEditable(true);
+        com_cliente.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                com_clienteItemStateChanged(evt);
+            }
+        });
+        com_cliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                com_clienteActionPerformed(evt);
+            }
+        });
+
         jLabel2.setText("Nombre Cliente:");
 
         jLabel4.setText("Fecha:");
@@ -167,10 +212,6 @@ public class Ventas extends javax.swing.JDialog {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-
-        f_fecha1.setText("jTextField1");
-
-        t_hora1.setText("jTextField2");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -186,11 +227,7 @@ public class Ventas extends javax.swing.JDialog {
                         .addGap(33, 33, 33)
                         .addComponent(jLabel5)
                         .addGap(18, 18, 18)
-                        .addComponent(t_hora, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(54, 54, 54)
-                        .addComponent(f_fecha1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(t_hora1, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(t_hora, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
@@ -199,24 +236,17 @@ public class Ventas extends javax.swing.JDialog {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(com_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(t_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(258, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(36, 36, 36)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5)
-                            .addComponent(t_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(t_hora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(f_fecha1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(t_hora1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(36, 36, 36)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel5)
+                    .addComponent(t_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(t_hora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
@@ -317,9 +347,7 @@ public class Ventas extends javax.swing.JDialog {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addGap(143, 143, 143)
-                                .addComponent(b_add, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(b_add, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 582, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel6)
@@ -358,7 +386,12 @@ public class Ventas extends javax.swing.JDialog {
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
-        b_guardar.setText("Guardar");
+        b_guardar.setText("Cobrar");
+        b_guardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                b_guardarActionPerformed(evt);
+            }
+        });
 
         b_new.setText("Nuevo");
         b_new.addActionListener(new java.awt.event.ActionListener() {
@@ -404,6 +437,14 @@ public class Ventas extends javax.swing.JDialog {
         jLabel7.setText("Monto:");
 
         t_monto.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("###0.##"))));
+        t_monto.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                t_montoFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                t_montoFocusLost(evt);
+            }
+        });
         t_monto.addInputMethodListener(new java.awt.event.InputMethodListener() {
             public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
             }
@@ -590,14 +631,14 @@ public class Ventas extends javax.swing.JDialog {
     }//GEN-LAST:event_t_montoInputMethodTextChanged
 
     private void b_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_salirActionPerformed
-        // TODO add your handling code here:
-        hoy = new Date();
-        JOptionPane.showMessageDialog(null, hoy,"hoy",JOptionPane.ERROR_MESSAGE);
-        t_fecha.setText(fecha.format(hoy));
-        f_fecha1.setText(fecha.format(hoy).toString());
-        
-        t_hora.setText(hora.format(hoy));
-        t_hora1.setText(hora.format(hoy).toString());
+//        // TODO add your handling code here:
+//        hoy = new Date();
+//        JOptionPane.showMessageDialog(null, hoy,"hoy",JOptionPane.ERROR_MESSAGE);
+//        t_fecha.setText(fecha.format(hoy));
+//////        f_fecha1.setText(fecha.format(hoy).toString());
+//        
+//        t_hora.setText(hora.format(hoy));
+////        t_hora1.setText(hora.format(hoy).toString());
     }//GEN-LAST:event_b_salirActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -658,6 +699,134 @@ public class Ventas extends javax.swing.JDialog {
   
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void com_clienteItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_com_clienteItemStateChanged
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
+            String idcli = com_cliente.getSelectedItem().toString();
+            int int_clie;
+            try {
+                int_clie = Integer.parseInt(idcli);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Debe de ingresar un numero","info",JOptionPane.ERROR_MESSAGE);
+                t_cliente.setText("");
+                return;
+            }
+            //JOptionPane.showMessageDialog(null, idcat,"info",JOptionPane.INFORMATION_MESSAGE);
+            
+            NodeVenta nod_clie;
+            nod_clie = ProyectoClase.mat_ventas.existeCliente_des(int_clie);
+            if (nod_clie != null) {
+                t_cliente.setText(nod_clie.cliente);
+            } else {
+                t_cliente.setText("");
+            }
+                
+        
+        }
+    }//GEN-LAST:event_com_clienteItemStateChanged
+
+    private void com_clienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_com_clienteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_com_clienteActionPerformed
+
+    private void t_montoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_t_montoFocusGained
+   ;
+    }//GEN-LAST:event_t_montoFocusGained
+
+    private void t_montoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_t_montoFocusLost
+        
+        double mon = 0.00;
+            try {
+                mon = Double.parseDouble(t_monto.getText());
+            } catch (Exception e) {
+                mon = 0.00;
+                return;
+            }
+        double vuelto = mon - Double.parseDouble(t_tot.getText());
+        t_cam.setText(String.valueOf(vuelto));
+    }//GEN-LAST:event_t_montoFocusLost
+
+    public void InsertVenta(){
+        
+        /*idcliente*/
+        String idclie_str = com_cliente.getSelectedItem().toString();
+            int int_clie;
+            try {
+                int_clie = Integer.parseInt(idclie_str);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Debe de ingresar un numero en cliente","info",JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+        String cliente = t_cliente.getText();
+        /*nombre cliente*/
+        if (t_cliente.getText().trim().length() == 0 || t_cliente.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Debe de ingresar Nombre del cliente","Error",JOptionPane.ERROR_MESSAGE);
+            return;
+        } 
+        
+        /*total*/
+        double monto;
+        if (t_monto.getText().trim().length() == 0 || t_monto.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Monto incorrecto","Error",JOptionPane.ERROR_MESSAGE);
+            return;
+        }   else    {
+            monto = Double.parseDouble(t_tot.getText());
+        }
+        
+        double total = Double.parseDouble(t_tot.getText());
+        double vuelto = Double.parseDouble(t_cam.getText());
+        //////
+        Date fec = null;
+        Date hour = null;
+        try {
+           fec = fecha.parse(t_fecha.getText());
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "ingrese fecha correcta","Error",JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+           hour = hora.parse(t_hora.getText());
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "ingrese hora correcta","Error",JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+//        JOptionPane.showMessageDialog(null, hour);
+//        JOptionPane.showMessageDialog(null, int_clie);
+//        JOptionPane.showMessageDialog(null, fec);
+        
+                    //mat_ventas.add(h3_x, 3 ,f3_z, "cliente33", "us1", 0, 0, 0);
+//        ProyectoClase.mat_ventas.add(hour, int_clie ,fec, "cliente33", "us1", 0, 0, 0);
+//       
+        ProyectoClase.mat_ventas.add(hour, int_clie ,fec, cliente, ProyectoClase.session.usuario_ac, total, monto, vuelto);
+        ActualizandoUnidades();
+        
+        llenado_cliente();
+        com_cliente.setSelectedItem(int_clie);
+//        
+        JOptionPane.showMessageDialog(null, "Venta ingresada","Info",JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+    public void ActualizandoUnidades(){
+
+        for (int i = 0; i < tab_det.getRowCount() ; i++) {
+            int idprod =  Integer.parseInt(tab_det.getValueAt(i, 0).toString()); 
+            int unidades = Integer.parseInt(tab_det.getValueAt(i, 2).toString());
+            
+            NodeProducto nod_update_prod;
+            nod_update_prod = ProyectoClase.mat_productos.existeProducto(idprod);
+            if (nod_update_prod != null) {
+                nod_update_prod.unidades = nod_update_prod.unidades - unidades;
+            }
+            //JOptionPane.showMessageDialog(null, tab_det.getValueAt(i, 1), "Err",JOptionPane.INFORMATION_MESSAGE);
+        }
+        
+    }
+    private void b_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_guardarActionPerformed
+        InsertVenta();
+    }//GEN-LAST:event_b_guardarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -708,7 +877,6 @@ public class Ventas extends javax.swing.JDialog {
     private javax.swing.JButton b_salir;
     private javax.swing.JComboBox<String> com_cliente;
     private javax.swing.JComboBox<String> com_prod;
-    private javax.swing.JTextField f_fecha1;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -728,7 +896,6 @@ public class Ventas extends javax.swing.JDialog {
     private javax.swing.JTextField t_cliente;
     private javax.swing.JFormattedTextField t_fecha;
     private javax.swing.JFormattedTextField t_hora;
-    private javax.swing.JTextField t_hora1;
     private javax.swing.JFormattedTextField t_monto;
     private javax.swing.JTextField t_producto;
     private javax.swing.JFormattedTextField t_tot;

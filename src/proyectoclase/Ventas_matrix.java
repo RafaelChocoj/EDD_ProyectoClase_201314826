@@ -45,6 +45,8 @@ public class Ventas_matrix {
     	add_z_header(fecha_z, "fecha_z");
     	add_x_header(horas_x, fecha_z);
     	add_y_header(idcliente_y, fecha_z, cliente);  	
+        
+        //JOptionPane.showMessageDialog(null, "creo las cabe");
     	//1.2 create y header
     	
     	
@@ -79,7 +81,11 @@ public class Ventas_matrix {
     	//////////////add_y_z0(new_z0, x, y, z);
     	
     	add_x(new_node,  horas_x, idcliente_y, fecha_z);
+        
+        //JOptionPane.showMessageDialog(null, "creo en x");
+        
         add_y(new_node,  horas_x, idcliente_y, fecha_z);
+        //JOptionPane.showMessageDialog(null, "creo en y");
 //    	add_y(new_node, x, y, z);
     	
     	/////******/esto para insertar en z. pero ya no
@@ -333,7 +339,7 @@ public class Ventas_matrix {
             /*primero recorre prufundidad*/
             /*recorre por z, para insertar a la derecha*/
             //while(tem.cor_z != z){
-            while(tem.fecha_z != z_fecha){
+            while(!tem.fecha_z.equals(z_fecha)){
             tem = tem.capa_up;
             }
 
@@ -403,6 +409,55 @@ public class Ventas_matrix {
     }  	
     //System.out.print("("+temp.idproducto_x+ ","+temp.idcate_y +") -> ");
 }
+  
+public NodeVenta existeCliente_y(NodeVenta nod_clie, int idcliente_y) {
+    //NodeVenta temp = head;
+    NodeVenta temp = nod_clie;
+    while (temp != null) { 
+        if (temp.idcliente_y == idcliente_y) {
+            return temp;
+         }
+        temp = temp.down;
+    } 	
+    return temp;
+}
+
+public NodeVenta existeCliente_z(int idcliente_y) {
+    NodeVenta temp = head;
+    while (temp != null) { 
+        existeCliente_y(temp, idcliente_y);
+        temp = temp.capa_up;
+    } 	
+    return null;
+}
+
+public NodeVenta existeCliente_des(int idcliente_y) {
+    //System.out.println();
+    
+    NodeVenta temp = head;
+    NodeVenta temp_inicio;
+
+    while (temp != null) { 
+            temp_inicio = temp;
+            while (temp != null) { 
+                    if (temp != null)
+                    {
+                        if (temp.idcliente_y == idcliente_y) {
+                            return temp;
+                         }
+                    }	    	
+                    temp = temp.down;
+                    }
+
+                    temp = temp_inicio;
+            temp = temp.capa_up;
+            //System.out.println();
+            }  	
+    
+            return null;
+            //System.out.println("**********termina**********");   
+    }
+
     
     
 }
