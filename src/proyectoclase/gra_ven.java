@@ -58,7 +58,7 @@ public class gra_ven extends javax.swing.JFrame {
         b_graf = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         b_graf.setText("Mostrar Grafica");
         b_graf.addActionListener(new java.awt.event.ActionListener() {
@@ -98,6 +98,12 @@ public class gra_ven extends javax.swing.JFrame {
 
     private void b_grafActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_grafActionPerformed
         
+        if (com_fecha.getItemCount() == 0) {
+            JOptionPane.showMessageDialog(null, "Seleccione item", "Err",JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        
+//        JOptionPane.showMessageDialog(null, com_fecha.getSelectedItem().toString());
         String fecha_capa = com_fecha.getSelectedItem().toString();
         Date fec = null;
         try {

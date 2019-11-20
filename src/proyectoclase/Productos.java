@@ -290,6 +290,7 @@ public class Productos extends javax.swing.JDialog {
         llenadoComboBox();
         bom_cat.setSelectedItem(int_cat);
         JOptionPane.showMessageDialog(null, "Se Guardó Producto" ,"Save",JOptionPane.INFORMATION_MESSAGE);
+        ProyectoClase.mat_productos.print_Grafica_matrix();
         
         
     }
@@ -303,7 +304,7 @@ public class Productos extends javax.swing.JDialog {
         
         //ProyectoClase.mat_productos.print_node_mat();
         
-        ProyectoClase.mat_productos.print_Grafica_matrix();
+        
     }//GEN-LAST:event_b_guardarActionPerformed
 
     private void bom_catItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_bom_catItemStateChanged
