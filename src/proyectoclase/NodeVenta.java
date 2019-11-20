@@ -6,6 +6,7 @@
 package proyectoclase;
 
 import java.util.Date;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -33,7 +34,9 @@ public class NodeVenta {
     NodeVenta capa_up;
     NodeVenta capa_down;
     
-    public NodeVenta (String tipo, Date horas_x, int idcliente_y, Date fecha_z, String cliente, String usuario, double total, double monto, double vuelto){
+    DefaultTableModel detalles;
+    
+    public NodeVenta (String tipo, Date horas_x, int idcliente_y, Date fecha_z, String cliente, String usuario, double total, double monto, double vuelto, DefaultTableModel detalles){
         this.tipo = tipo;
         this.horas_x = horas_x;
         this.idcliente_y = idcliente_y;
@@ -45,6 +48,8 @@ public class NodeVenta {
         this.total = total;
         this.monto = monto;
         this.vuelto = vuelto;
+        
+        this.detalles = detalles;
     }
     
 }

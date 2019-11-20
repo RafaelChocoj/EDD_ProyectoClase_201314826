@@ -8,6 +8,7 @@ package proyectoclase;
 import com.itextpdf.awt.DefaultFontMapper;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Paragraph;
@@ -20,6 +21,8 @@ import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  *
@@ -32,6 +35,7 @@ public class Reportes extends javax.swing.JFrame {
      */
     public Reportes() {
         initComponents();
+        com_cliente.setVisible(false);
     }
 
     /**
@@ -45,6 +49,8 @@ public class Reportes extends javax.swing.JFrame {
 
         b_productos = new javax.swing.JButton();
         b_clientes = new javax.swing.JButton();
+        com_cliente = new javax.swing.JComboBox<>();
+        b_ventas = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -56,6 +62,18 @@ public class Reportes extends javax.swing.JFrame {
         });
 
         b_clientes.setText("Clientes");
+        b_clientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                b_clientesActionPerformed(evt);
+            }
+        });
+
+        b_ventas.setText("Ventas");
+        b_ventas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                b_ventasActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -64,18 +82,29 @@ public class Reportes extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(38, 38, 38)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(b_clientes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(b_productos, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE))
-                .addContainerGap(206, Short.MAX_VALUE))
+                    .addComponent(b_ventas, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(b_clientes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(b_productos, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
+                .addComponent(com_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(b_productos, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addComponent(b_productos, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(com_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addComponent(b_clientes, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(155, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(b_ventas, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(85, Short.MAX_VALUE))
         );
 
         pack();
@@ -84,6 +113,14 @@ public class Reportes extends javax.swing.JFrame {
     private void b_productosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_productosActionPerformed
         writeDocsPDF("productos.pdf");
     }//GEN-LAST:event_b_productosActionPerformed
+
+    private void b_clientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_clientesActionPerformed
+        writeDocsPDF_cliente("clientes.pdf");
+    }//GEN-LAST:event_b_clientesActionPerformed
+
+    private void b_ventasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_ventasActionPerformed
+        writeDocsPDF_ventas("ventas.pdf");
+    }//GEN-LAST:event_b_ventasActionPerformed
 
     public static void writeDocsPDF(String fileName) {
     PdfWriter writer = null;
@@ -208,6 +245,338 @@ public class Reportes extends javax.swing.JFrame {
     
 ////    JOptionPane.showMessageDialog(null,"El proceso se realizó con éxito");
 }
+    
+  public void writeDocsPDF_ventas(String fileName) {
+    PdfWriter writer = null;
+ 
+    Document document = new Document();
+ 
+    try {
+        writer = PdfWriter.getInstance(document, new FileOutputStream(fileName));
+        document.open();
+
+        /*  reportes de Productos  */
+        document.newPage();
+        document.add(new Paragraph("Reporte de Ventas",
+				FontFactory.getFont("arial",   // fuente
+				20,                            // tamaño
+				Font.ITALIC,                   // estilo
+				BaseColor.BLUE)));
+        document.bottom();
+        document.add(new Paragraph("--"));
+        document.add(new Paragraph(""));
+        
+        
+//        int cont = 0;
+//        for(ColaImpresion ca : cola){
+//            cont++;
+            //PdfPTable tabla = new PdfPTable(2);
+            
+            PdfPTable tabla = new PdfPTable(9);
+            tabla.addCell("No.");
+            tabla.addCell("Fecha Venta");
+            tabla.addCell("Hora");
+            
+            tabla.addCell("id Cliente");
+            tabla.addCell("Cliente");
+            
+            tabla.addCell("Usuario");
+            
+            tabla.addCell("Total");
+            tabla.addCell("Monto");
+            tabla.addCell("Cambio");
+            
+            tabla.spacingAfter();
+            document.add(tabla);
+            conta = 0;
+            print_node_cor_z(document);
+
+//    NodeProducto temp = ProyectoClase.mat_productos.head;
+//    int conta = 0;
+//    while (temp != null) { 
+//  
+//            if (temp.down != null){
+//                NodeProducto temp_abj = temp.down;
+//                while (temp_abj != null) { 
+//                    
+//                    if (temp_abj.tipo.equals("N")) {
+//                        conta++;
+//                        tabla.addCell(String.valueOf(conta));
+//                        tabla.addCell(String.valueOf(temp_abj.idproducto_x));
+//                        tabla.addCell(String.valueOf(temp_abj.nombrear));
+//                        
+//                        tabla.addCell(String.valueOf(temp_abj.idcate_y));
+//                        tabla.addCell(String.valueOf(temp_abj.nombrecate));
+//                        
+//                        tabla.addCell(String.valueOf(temp_abj.precio));
+//                        tabla.addCell(String.valueOf(temp_abj.unidades));
+//                        //productos.addRow(new Object[]{temp_abj.idproducto_x, temp_abj.nombrear,temp_abj.idcate_y, temp_abj.nombrecate , temp_abj.precio, temp_abj.unidades });
+//                    }
+//                       
+//
+//                    temp_abj = temp_abj.down;
+//                }
+//            }
+//        temp = temp.right;
+//    } 
+    
+            
+            
+            
+
+            document.newPage();
+
+        document.close();
+        Desktop.getDesktop().open(new File(fileName));
+        
+    } catch (Exception e) {
+        e.printStackTrace();
+        document.close();
+    }
+    
+
+    
+////    JOptionPane.showMessageDialog(null,"El proceso se realizó con éxito");
+}
+    
+    int conta = 0;
+    public void writeDocsPDF_cliente(String fileName) {
+    PdfWriter writer = null;
+ 
+    Document document = new Document();
+ 
+    try {
+        writer = PdfWriter.getInstance(document, new FileOutputStream(fileName));
+        document.open();
+
+        /*  reportes de Productos  */
+        document.newPage();
+        document.add(new Paragraph("Reporte de Clientes",
+				FontFactory.getFont("arial",   // fuente
+				20,                            // tamaño
+				Font.ITALIC,                   // estilo
+				BaseColor.BLUE)));
+        document.bottom();
+        document.add(new Paragraph("--"));
+        document.add(new Paragraph(""));
+        
+
+            PdfPTable tabla = new PdfPTable(3);
+            tabla.addCell("No.");
+            tabla.addCell("id Cliente");
+            tabla.addCell("Nombre");
+            
+
+//    NodeProducto temp = ProyectoClase.mat_productos.head;
+//    int conta = 0;
+//    while (temp != null) { 
+//  
+//            if (temp.down != null){
+//                NodeProducto temp_abj = temp.down;
+//                while (temp_abj != null) { 
+//                    
+//                    if (temp_abj.tipo.equals("N")) {
+//                        conta++;
+//                        tabla.addCell(String.valueOf(conta));
+//                        tabla.addCell(String.valueOf(temp_abj.idproducto_x));
+//                        tabla.addCell(String.valueOf(temp_abj.nombrear));
+//                        
+//                        tabla.addCell(String.valueOf(temp_abj.idcate_y));
+//                        tabla.addCell(String.valueOf(temp_abj.nombrecate));
+//                        
+//                        tabla.addCell(String.valueOf(temp_abj.precio));
+//                        tabla.addCell(String.valueOf(temp_abj.unidades));
+//                        //productos.addRow(new Object[]{temp_abj.idproducto_x, temp_abj.nombrear,temp_abj.idcate_y, temp_abj.nombrecate , temp_abj.precio, temp_abj.unidades });
+//                    }
+//                       
+//
+//                    temp_abj = temp_abj.down;
+//                }
+//            }
+//        temp = temp.right;
+//    } 
+    
+        SimpleDateFormat fecha = new SimpleDateFormat("dd/MM/yyyy");
+        Date fech_o = null;
+        try {           
+           fech_o = fecha.parse("01/01/1970");            
+        } catch (Exception e) {
+        }
+        
+        conta = 0;
+        com_cliente.removeAllItems();
+        NodeVenta temp = ProyectoClase.mat_ventas.head;
+        while (temp != null) { 
+            
+            if (!temp.fecha_z.equals(fech_o)) {
+                llenado_cliente_y(temp, tabla);
+            }
+            temp = temp.capa_up;
+        }
+        ///////////****
+            
+            
+            tabla.spacingAfter();
+            document.add(tabla);
+            
+
+            document.newPage();
+            
+
+        document.close();
+        Desktop.getDesktop().open(new File("clientes.pdf"));
+        
+    } catch (Exception e) {
+        e.printStackTrace();
+        document.close();
+    }
+    
+
+    
+////    JOptionPane.showMessageDialog(null,"El proceso se realizó con éxito");
+}
+    
+    public void llenado_cliente_y(NodeVenta clie_z, PdfPTable tabla){
+        NodeVenta temp = clie_z;
+        while (temp != null) { 
+            
+            if (temp.idcliente_y != 0) {
+                if (ya_enlista(String.valueOf(temp.idcliente_y)) == false) {
+                        com_cliente.addItem(String.valueOf(temp.idcliente_y));
+                        conta++;
+                        tabla.addCell(String.valueOf(conta));
+                        tabla.addCell(String.valueOf(temp.idcliente_y));
+                        tabla.addCell(String.valueOf(temp.cliente));
+
+                }
+                
+            }
+            temp = temp.down;
+        }
+    }
+    
+    public boolean ya_enlista(String clien){
+        for (int i = 0; i < com_cliente.getItemCount(); i++) {
+            String cl = com_cliente.getItemAt(i);
+            if (cl.equals(clien)) {
+                return true;
+            }
+    }
+        return false;
+    }
+        
+    /////////////////////////ventas
+    public void print_node_cor_z(Document document) throws DocumentException {
+    	NodeVenta temp = ProyectoClase.mat_ventas.head;;
+    	while (temp != null) { 
+	    	//cout<<"c_o_z: "<<temp->data<<endl;
+	    	print_node_cor_mat(temp, document);
+	    	temp = temp.capa_up;
+        }  	
+		
+    }
+    
+    SimpleDateFormat fecha = new SimpleDateFormat("dd/MM/yyyy");
+    SimpleDateFormat hora = new SimpleDateFormat("HH:mm");
+    public void print_node_cor_mat(NodeVenta nodo_x_nivel, Document document) throws DocumentException {
+    	NodeVenta temp = nodo_x_nivel;
+    	NodeVenta temp_inicio;
+    	
+    	NodeVenta temp_sup_ini;
+    	/*para recorrer para la derecha*/
+
+    	while (temp != null) { 
+
+	    	temp_inicio = temp;
+	    	/*para recorrer para abajo*/
+
+	    	while (temp != null) { 
+		    	
+                        //////////////
+                    if (temp.tipo.equals("N")) {
+                        
+                        PdfPTable tablaven = new PdfPTable(9);
+//                        tablaven.addCell("No.");
+//                        tablaven.addCell("Fecha Venta");
+//                        tablaven.addCell("Hora");
+//
+//                        tablaven.addCell("id Cliente");
+//                        tablaven.addCell("Cliente");
+//
+//                        tablaven.addCell("Usuario");
+//
+//                        tablaven.addCell("Total");
+//                        tablaven.addCell("Monto");
+//                        tablaven.addCell("Cambio");
+            
+                        conta++;
+//                        tabla.addCell(String.valueOf(conta));
+//                        tabla.addCell(String.valueOf(fecha.format(temp.fecha_z) ));
+//                        tabla.addCell(String.valueOf(hora.format(temp.horas_x)));
+//                        
+//                        tabla.addCell(String.valueOf(temp.idcliente_y));
+//                        tabla.addCell(String.valueOf(temp.cliente));
+//                        
+//                        tabla.addCell(String.valueOf(temp.usuario));
+//                        
+//                        tabla.addCell(String.valueOf(temp.total));
+//                        tabla.addCell(String.valueOf(temp.monto));
+//                        tabla.addCell(String.valueOf(temp.vuelto));
+                    tablaven.addCell(String.valueOf(conta));
+                    tablaven.addCell(String.valueOf(fecha.format(temp.fecha_z) ));
+                    tablaven.addCell(String.valueOf(hora.format(temp.horas_x)));
+
+                    tablaven.addCell(String.valueOf(temp.idcliente_y));
+                    tablaven.addCell(String.valueOf(temp.cliente));
+
+                    tablaven.addCell(String.valueOf(temp.usuario));
+
+                    tablaven.addCell(String.valueOf(temp.total));
+                    tablaven.addCell(String.valueOf(temp.monto));
+                    tablaven.addCell(String.valueOf(temp.vuelto));
+                        
+                    tablaven.spacingAfter();
+                    document.add(tablaven);    
+                    
+                    if (temp.detalles != null) {
+                        PdfPTable detalle = new PdfPTable(5);
+                        //detalle.addCell("No.");
+                        detalle.addCell("id producto");
+                        detalle.addCell("Nombre");
+                        detalle.addCell("Unidades");
+                        detalle.addCell("Precio");
+                        detalle.addCell("Subtotal");
+                        
+                        /*agregando detalles*/
+                        for (int i = 0; i < temp.detalles.getRowCount() ; i++) {
+                            detalle.addCell(String.valueOf(temp.detalles.getValueAt(i, 0) ));
+                            detalle.addCell(String.valueOf(temp.detalles.getValueAt(i, 1) ));
+                            detalle.addCell(String.valueOf(temp.detalles.getValueAt(i, 2) ));
+                            detalle.addCell(String.valueOf(temp.detalles.getValueAt(i, 3) ));
+                            detalle.addCell(String.valueOf(temp.detalles.getValueAt(i, 4) ));
+        
+                        }
+                        
+
+                    detalle.spacingAfter();
+                    document.add(detalle);  
+                    }
+                         
+                        
+            
+                    }
+                       
+
+		    	temp = temp.right;
+			}
+		
+			temp = temp_inicio;
+	    	temp = temp.down;
+		}  	
+
+ 	
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -246,5 +615,7 @@ public class Reportes extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton b_clientes;
     private javax.swing.JButton b_productos;
+    private javax.swing.JButton b_ventas;
+    private javax.swing.JComboBox<String> com_cliente;
     // End of variables declaration//GEN-END:variables
 }

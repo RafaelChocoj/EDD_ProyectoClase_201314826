@@ -52,6 +52,9 @@ public class Ventas extends javax.swing.JDialog {
         });
         
         llenado_cliente();
+        jButton1.setVisible(false);
+        b_new.setVisible(false);
+        
     }
     
     public void llenado_cliente(){
@@ -642,6 +645,7 @@ public class Ventas extends javax.swing.JDialog {
 //        
 //        t_hora.setText(hora.format(hoy));
 ////        t_hora1.setText(hora.format(hoy).toString());
+        this.dispose();
     }//GEN-LAST:event_b_salirActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -773,7 +777,7 @@ public class Ventas extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "Monto incorrecto","Error",JOptionPane.ERROR_MESSAGE);
             return;
         }   else    {
-            monto = Double.parseDouble(t_tot.getText());
+            monto = Double.parseDouble(t_monto.getText());
         }
         
         double total = Double.parseDouble(t_tot.getText());
@@ -802,12 +806,21 @@ public class Ventas extends javax.swing.JDialog {
                     //mat_ventas.add(h3_x, 3 ,f3_z, "cliente33", "us1", 0, 0, 0);
 //        ProyectoClase.mat_ventas.add(hour, int_clie ,fec, "cliente33", "us1", 0, 0, 0);
 //       
-        ProyectoClase.mat_ventas.add(hour, int_clie ,fec, cliente, ProyectoClase.session.usuario_ac, total, monto, vuelto);
+        ProyectoClase.mat_ventas.add(hour, int_clie ,fec, cliente, ProyectoClase.session.usuario_ac, total, monto, vuelto, detalles);
         ActualizandoUnidades();
         
         llenado_cliente();
         com_cliente.setSelectedItem(int_clie);
 //        
+        com_cliente.setEnabled(false);
+        t_cliente.setEnabled(false);
+        t_monto.setEnabled(false);
+        t_fecha.setEnabled(false);
+        t_hora.setEnabled(false);
+        com_cliente.setEnabled(false);
+        tab_det.setEnabled(false);
+        b_guardar.setEnabled(false);
+        com_prod.setEnabled(false);
         JOptionPane.showMessageDialog(null, "Venta ingresada","Info",JOptionPane.INFORMATION_MESSAGE);
     }
     

@@ -8,6 +8,7 @@ package proyectoclase;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -30,7 +31,7 @@ public class Ventas_matrix {
         } catch (Exception e) {
         }
         //public NodeVenta (String tipo, Date horas_x, int idcliente_y, Date fecha_z, String cliente, String usuario, double total, double monto, double vuelto)
-        NodeVenta temp = new NodeVenta("R",hour_0, 0, fec_0, "raiz", "raiz", 0,  0,0);
+        NodeVenta temp = new NodeVenta("R",hour_0, 0, fec_0, "raiz", "raiz", 0,  0,0, null);
         head = temp; 
         
 //        this.size = 0;
@@ -38,7 +39,7 @@ public class Ventas_matrix {
 //        this.size_y = 0;
     }
     
-    public void add(Date horas_x, int idcliente_y, Date fecha_z, String cliente, String usuario, double total, double monto, double vuelto) {
+    public void add(Date horas_x, int idcliente_y, Date fecha_z, String cliente, String usuario, double total, double monto, double vuelto, DefaultTableModel detalles) {
     	//1 crear header
     	//1.1 creade x header
     	//cout<<"x: " <<x<<endl; 
@@ -52,7 +53,7 @@ public class Ventas_matrix {
     	
     	//2 insert nodo
     	//node *new_node = new node(value);
-    	NodeVenta new_node = new NodeVenta("N", horas_x, idcliente_y, fecha_z, cliente, usuario, total, monto, vuelto);
+    	NodeVenta new_node = new NodeVenta("N", horas_x, idcliente_y, fecha_z, cliente, usuario, total, monto, vuelto, detalles);
     	//add_x(new_node, x);
     	//add_y(new_node, y, x);
     	
@@ -116,7 +117,7 @@ public class Ventas_matrix {
     	
     	if (head.capa_up == null) { 
 	    	//node *temp = new node(x);    	
-	    	NodeVenta temp = new NodeVenta("C",hour_0, 0, fecha_z, "", ProyectoClase.session.usuario_ac, 0, 0,0);
+	    	NodeVenta temp = new NodeVenta("C",hour_0, 0, fecha_z, "", ProyectoClase.session.usuario_ac, 0, 0,0, null);
 	    	head.capa_up = temp;
 	    	temp.capa_down = head; 
     	} else  {     	
@@ -128,14 +129,14 @@ public class Ventas_matrix {
 
 			 if (temp.capa_up == null ) { 
 		    	//node *new_temp = new node(z);
-		    	NodeVenta new_temp = new NodeVenta("C",hour_0, 0, fecha_z, "", ProyectoClase.session.usuario_ac, 0, 0,0);
+		    	NodeVenta new_temp = new NodeVenta("C",hour_0, 0, fecha_z, "", ProyectoClase.session.usuario_ac, 0, 0,0, null);
 		    	temp.capa_up = new_temp;
 		    	new_temp.capa_down = temp; 
 		    	
                         //}else if (temp.capa_up != null && temp.capa_up.data != z )
 	    		}else if (temp.capa_up != null && !temp.capa_up.fecha_z.equals(fecha_z) )
 				{
-	    			NodeVenta new_temp = new NodeVenta("C",hour_0, 0, fecha_z, "", ProyectoClase.session.usuario_ac, 0, 0,0);
+	    			NodeVenta new_temp = new NodeVenta("C",hour_0, 0, fecha_z, "", ProyectoClase.session.usuario_ac, 0, 0,0, null);
 	    			NodeVenta c_up = temp.capa_up;
 	    			
 	    			temp.capa_up =new_temp;
@@ -174,7 +175,7 @@ public class Ventas_matrix {
     		
     	if (head_y.down == null) { 
                                 //( tipo, horas_x, idcliente_y, fecha_z, cliente, usuario, total, monto, vuelto)
-	    	NodeVenta temp = new NodeVenta("C",hour_0, y_cliente, fec_0, cliente, ProyectoClase.session.usuario_ac, 0, 0,0);
+	    	NodeVenta temp = new NodeVenta("C",hour_0, y_cliente, fec_0, cliente, ProyectoClase.session.usuario_ac, 0, 0,0, null);
 	    	head_y.down = temp;
 	    	temp.up = head_y; 
     	} else  {     	
@@ -190,13 +191,13 @@ public class Ventas_matrix {
 			temp = temp.down;
                 } 
 			 if (temp.down == null ) { 
-		    	NodeVenta new_temp = new NodeVenta("C",hour_0,y_cliente , fec_0, cliente, ProyectoClase.session.usuario_ac, 0, 0,0);
+		    	NodeVenta new_temp = new NodeVenta("C",hour_0,y_cliente , fec_0, cliente, ProyectoClase.session.usuario_ac, 0, 0,0, null);
 		    	temp.down = new_temp;
 		    	new_temp.up = temp; 
 		    	
 	    		}else if (temp.down != null && temp.down.idcliente_y != y_cliente )
 				{
-	    			NodeVenta new_temp = new NodeVenta("C",hour_0,y_cliente , fec_0, cliente, ProyectoClase.session.usuario_ac, 0, 0,0);
+	    			NodeVenta new_temp = new NodeVenta("C",hour_0,y_cliente , fec_0, cliente, ProyectoClase.session.usuario_ac, 0, 0,0, null);
 	    			NodeVenta der = temp.down;
 	    			
 	    			temp.down =new_temp;
@@ -228,7 +229,7 @@ public class Ventas_matrix {
 		}
 		//cout<<"222 z,x head_x: "<<head_x->data<<" "<<endl;
     	if (head_x.right == null) { 	
-	    	NodeVenta temp = new NodeVenta("C",x_hora,0 , fec_0, "x_hora", ProyectoClase.session.usuario_ac, 0, 0,0);
+	    	NodeVenta temp = new NodeVenta("C",x_hora,0 , fec_0, "x_hora", ProyectoClase.session.usuario_ac, 0, 0,0, null);
 	    	head_x.right = temp;
 	    	temp.left = head_x; 
     	} else  {     
@@ -246,14 +247,14 @@ public class Ventas_matrix {
 			temp = temp.right;
     	} 
 			 if (temp.right == null ) { 
-		    	NodeVenta new_temp = new  NodeVenta("C",x_hora,0 , fec_0, "x_hora", ProyectoClase.session.usuario_ac, 0, 0,0);
+		    	NodeVenta new_temp = new  NodeVenta("C",x_hora,0 , fec_0, "x_hora", ProyectoClase.session.usuario_ac, 0, 0,0, null);
 		    	temp.right = new_temp;
 		    	new_temp.left = temp; 
 		    	
 	    		}else if (temp.right != null && !temp.right.horas_x.equals(x_hora) )
                         //}else if (temp.right != null && temp.right.horas_x != x )
 				{
-	    			NodeVenta new_temp = new NodeVenta("C",x_hora,0 , fec_0, "x_hora", ProyectoClase.session.usuario_ac, 0, 0,0);
+	    			NodeVenta new_temp = new NodeVenta("C",x_hora,0 , fec_0, "x_hora", ProyectoClase.session.usuario_ac, 0, 0,0, null);
 	    			NodeVenta der = temp.right;
 	    			
 	    			temp.right =new_temp;

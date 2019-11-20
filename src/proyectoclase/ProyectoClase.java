@@ -66,9 +66,9 @@ public class ProyectoClase {
             
         } catch (Exception e) {
         }
-        mat_ventas.add(h1_x, 1, f1_z, "cliente1", "us1", 0, 0, 0);
-        mat_ventas.add(h2_x, 3 ,f1_z, "cliente3", "us1", 0, 0, 0);
-        mat_ventas.add(h2_x, 2 ,f2_z, "cliente2", "us1", 0, 0, 0);
+        mat_ventas.add(h1_x, 1, f1_z, "cliente1", "us1", 0, 0, 0, null);
+        mat_ventas.add(h2_x, 3 ,f1_z, "cliente3", "us1", 0, 0, 0, null);
+        mat_ventas.add(h2_x, 2 ,f2_z, "cliente2", "us1", 0, 0, 0, null);
         
         //mat_ventas.add(h3_x, 3 ,f3_z, "cliente33", "us1", 0, 0, 0);
         
