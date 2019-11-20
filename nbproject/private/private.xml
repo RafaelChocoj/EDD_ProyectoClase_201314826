@@ -3,11 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/Estructuras/ProyectoClase/src/proyectoclase/Productos_matrix.java</file>
-            <file>file:/E:/Estructuras/ProyectoClase/src/proyectoclase/Productos.java</file>
             <file>file:/E:/Estructuras/ProyectoClase/src/proyectoclase/ProyectoClase.java</file>
+            <file>file:/E:/Estructuras/ProyectoClase/src/proyectoclase/Productos.java</file>
+            <file>file:/E:/Estructuras/ProyectoClase/src/proyectoclase/gra_ven.java</file>
+            <file>file:/E:/Estructuras/ProyectoClase/src/proyectoclase/Ventas_matrix.java</file>
             <file>file:/E:/Estructuras/ProyectoClase/src/proyectoclase/Menu.java</file>
-            <file>file:/E:/Estructuras/ProyectoClase/src/proyectoclase/loguinC.java</file>
+            <file>file:/E:/Estructuras/ProyectoClase/src/proyectoclase/Ventas.java</file>
+            <file>file:/E:/Estructuras/ProyectoClase/src/proyectoclase/NodeProducto.java</file>
+            <file>file:/E:/Estructuras/ProyectoClase/src/proyectoclase/Reportes.java</file>
         </group>
     </open-files>
 </project-private>
